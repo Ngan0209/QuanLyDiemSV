@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div>
+        <div>
+            <div th:replace="base :: sidebar"></div>
+            <main class="container">
+                <div style="padding-top: 110px "></div>
+
+                <div class="w3-container" style="margin-left:200px">
+                    <div class="section-header">
+                        <h2>Danh sách giảng viên</h2>
+                    </div>
+
+                    <div>
+                        <form th:action="@{/teachers/addorupdate}" method="post" th:object="${teacher}">
+                            
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="text" class="form-control" id="name" placeholder="Tên giảng viên" th:field="*{name}" required />
+                                <label for="name">Tên giảng viên</label>
+                            </div>
+                           
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="text" class="form-control" id="education" placeholder="Học vị" th:field="*{education}" required/>
+                                <label for="schoolYear">Học vị</label>
+                            </div>
+
+                            <div class="form-floating mb-3 mt-3">
+                                <select class="form-select pt-4" id="facultyId" th:field="*{facultyId.id}" required>
+                                    <option value="" disabled selected>-- Chọn khoa --</option>
+                                    <option th:each="c : ${faculties}" th:value="${c.id}" th:text="${c.name}"></option>
+                                </select>
+                                <label for="faculty">Khoa</label>
+                            </div>
+
+
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="hidden" th:field="*{id}" />
+
+                                <button type="submit" class="btn btn-success">
+                                    <span th:if="${teacher.id == null}">Thêm giảng viên</span>
+                                    <span th:if="${teacher.id != null}">Cập nhật giảng viên</span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div th:replace="base :: footer" ></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+

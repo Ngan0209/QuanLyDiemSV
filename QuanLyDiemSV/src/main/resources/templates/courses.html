@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div>
+        <div>
+            <div th:replace="base :: sidebar"></div>
+            <main class="container">
+                <div style="padding-top: 110px "></div>
+
+                <div class="w3-container" style="margin-left:200px">
+                    <div class="section-header">
+                        <h2>Danh sách môn học</h2>
+                    </div>
+
+                    <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                        <!-- Nút bên trái -->
+                        <a th:href="@{/courses/addorupdate}" class="btn btn-success">Thêm môn học</a>
+
+                        <!-- Form tìm kiếm bên phải -->
+                        <form th:action="@{/courses}" class="d-flex">
+                            <input type="text" class="form-control me-2" placeholder="Nhập tên môn học" name="kw">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <table class="table">
+                            <tr>
+                                <th>Id</th>
+                                <th>Tên</th>
+                                <th>Số tín chỉ</th>
+                                <th></th>
+                            </tr>
+                            <tr th:each="c: ${courses}">
+                                <!--        <td>
+                                            <img th:src="${p.image}" width="200" class="rounded" />
+                                        </td>-->
+
+                                <td th:text="${c.id}"></td>
+                                <td th:text="${c.name}"></td>
+                                <td th:text="${c.creditHours} + ' tín chỉ'"></td>
+                                <!--        <td>
+                                            <a th:href="@{'/products/' + ${p.id}}"  class="btn btn-info">Cập nhật</a>
+                                            <button th:onclick="'deleteProduct(\'' + @{/api/products/} + ${p.id} + '\')'" class="btn btn-danger">Xóa</button>
+                                        </td>-->
+                                <td>
+
+                                    <a class="btn btn-info" data-bs-toggle="modal"
+                                       th:attr="data-bs-target='#courseDetail' + ${c.id}">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+
+                                    <a th:href="@{'/courses/addorupdate/' + ${c.id}}" class="btn btn-info"><i class="fa-solid fa-square-pen"></i></a>
+                                    <button th:onclick="/" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            <div class="modal fade" th:id="'courseDetail' + ${c.id}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">THÔNG TIN MÔN HỌC</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Tên môn</label>
+                                                    <input type="text" class="form-control" th:value="${c.name}" readonly>
+
+                                                    <label>Số tín chỉ</label>
+                                                    <input type="text" class="form-control" th:value="${c.creditHours}" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="description">Mô tả</label>
+                                                    <textarea id="description"
+                                                              class="form-control"
+                                                              readonly
+                                                              rows="1"
+                                                              style="resize: none; overflow: hidden; min-height: 38px;"
+                                                              th:text="${c.description}"></textarea>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div th:replace="base :: footer" ></div>
+    </div>
+</body>
+</html>
+
+
+

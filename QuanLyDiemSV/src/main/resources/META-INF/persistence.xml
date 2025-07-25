@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+  <!-- Define Persistence Unit -->
+  <persistence-unit name="my_persistence_unit">
+    <class>com.cln.pojo.Student</class>
+    <class>com.cln.pojo.Faculty</class>
+    <class>com.cln.pojo.Class</class>
+    <class>com.cln.pojo.Teacher</class>
+    <class>com.cln.pojo.StudentClass</class>
+    <class>com.cln.pojo.Course</class>
+    <class>com.cln.pojo.User</class>
+    <class>com.cln.pojo.Grade</class>
+    <class>com.cln.pojo.Typegrade</class>
+    <class>com.cln.pojo.Semester</class>
+    <class>navbar.css</class>
+    <class>base.html</class>
+  </persistence-unit>
+</persistence>

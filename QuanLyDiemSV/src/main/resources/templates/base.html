@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      mlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">>
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:fragment="resources">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"><!-- comment -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <link rel="stylesheet" th:href="@{/css/navbar.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+    </th:context>
+</head>
+<body>
+    <div th:fragment="header" class="fixed-top" >
+        <div class="header">
+            <div class="flex wrap header">
+                <div>
+                    <a href="#">Liên hệ</a>
+                    <a href="#">Hỏi đáp</a>
+                    <a href="#">Trợ giúp</a>
+                    <a href="#">Biểu mẫu</a>
+                </div>
+                <div>
+                    <a href="#">&#128222 (84-028)3838.6603</a>
+                    <a href="mailto:fcs@ou.edu.vn"> &#9993 fcs@ou.edu.vn</a>
+                </div>
+
+            </div>
+        </div> 
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <img th:src="@{/image/Logo.png}" alt="Logo" style="width: 300px"/>
+            <div class="container-fluid">
+                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div th:fragment="sidebar">
+        <div class="w3-sidebar w3-bar-block w3-light-grey w3-card " style="width:200px; margin-top: 103px;">
+            <a th:href="@{/}" class="w3-bar-item w3-button"><i class="fa-solid fa-house"></i> Trang chủ</a>
+            <a th:href="@{/faculties}" class="w3-bar-item w3-button"><i class="fa-solid fa-building-columns"></i> khoa</a>
+            <a th:href="@{/classes/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-school-flag"></i> Lớp học</a>
+            <a th:href="@{/students}" class="w3-bar-item w3-button"><i class="fa-solid fa-graduation-cap"></i> Quản lý sinh viên</a>
+            <a th:href="@{/teachers}" class="w3-bar-item w3-button"><i class="fa-solid fa-folder-open"></i> Quản lý giảng viên</a>
+            <a th:href="@{/courses}" class="w3-bar-item w3-button"><i class="fa-solid fa-bookmark"></i> Quản lý môn học</a>
+            <a th:href="@{/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-calendar"></i> Quản lý học kì</a>
+            <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"><i class="fa-solid fa-chart-simple"></i>
+                Thống kê <i class="fa fa-caret-down"></i>
+            </button>
+            <div id="demoAcc" class="w3-hide w3-white w3-card">
+                <a href="#" class="w3-bar-item w3-button">Link1</a>
+                <a href="#" class="w3-bar-item w3-button">Link2</a>
+            </div>
+        </div>
+        <script>
+            function myAccFunc() {
+                var x = document.getElementById("demoAcc");
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                    x.previousElementSibling.className += " w3-green";
+                } else {
+                    x.className = x.className.replace(" w3-show", "");
+                    x.previousElementSibling.className =
+                            x.previousElementSibling.className.replace(" w3-green", "");
+                }
+            }
+
+        </script>
+    </div>
+    <footer th:fragment="footer" style="margin-left:200px">
+            <div class="mt-4 p-5 bg-primary text-white rounded">
+        <h1>Chu Lệ Ngân  &copy; 2025</h1>
+        <p>eCommerce Website - Quan Ly Diem Sinh Vien</p>
+    </div>
+    </footer>
+</body>
+</html>

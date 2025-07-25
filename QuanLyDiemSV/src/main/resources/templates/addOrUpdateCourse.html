@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div>
+        <div>
+            <div th:replace="base :: sidebar"></div>
+            <main class="container">
+                <div style="padding-top: 110px "></div>
+
+                <div class="w3-container" style="margin-left:200px">
+                    <div class="section-header">
+                        <h2>Danh sách môn học</h2>
+                    </div>
+
+                    <div>
+                        <form th:action="@{/courses/addorupdate}" method="post" th:object="${course}">
+
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="text" class="form-control" id="name" placeholder="Tên môn học" th:field="*{name}" required />
+                                <label for="name">Tên môn học</label>
+                            </div>
+
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="text" class="form-control" id="description" placeholder="Mô tả" th:field="*{description}" />
+                                <label for="description">Mô tả</label>
+                            </div>
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="number" class="form-control" id="creditHours" placeholder="Số tín chỉ" th:field="*{creditHours}" min="1" max="4" required/>
+                                <label for="creditHours">Số tín chỉ</label>
+                            </div>
+
+
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="hidden" th:field="*{id}" />
+
+                                <button type="submit" class="btn btn-success">
+                                    <span th:if="${course.id == null}">Thêm môn học</span>
+                                    <span th:if="${course.id != null}">Cập nhật môn học</span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div th:replace="base :: footer" ></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

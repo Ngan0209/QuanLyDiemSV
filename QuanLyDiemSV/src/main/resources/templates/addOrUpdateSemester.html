@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div>
+        <div>
+            <div th:replace="base :: sidebar"></div>
+            <main class="container">
+                <div style="padding-top: 110px "></div>
+
+                <div class="w3-container" style="margin-left:200px">
+                    <div class="section-header">
+                        <h2>Danh sách sinh viên</h2>
+                    </div>
+
+                    <div>
+                        <form th:action="@{/semesters/addorupdate}" method="post" th:object="${semester}">
+                            
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="text" class="form-control" id="name" placeholder="Tên sinh viên" th:field="*{name}" required />
+                                <label for="name">Tên sinh viên</label>
+                            </div>
+                     
+                            <div class="form-floating mb-3 mt-3">
+                                <input type="hidden" th:field="*{id}" />
+
+                                <button type="submit" class="btn btn-success">
+                                    <span th:if="${semester.id == null}">Thêm học kì</span>
+                                    <span th:if="${semester.id != null}">Cập nhật học kì</span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div th:replace="base :: footer" ></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+

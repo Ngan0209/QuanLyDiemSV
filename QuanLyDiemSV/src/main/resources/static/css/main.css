@@ -1,0 +1,21 @@
+.section-header {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #e76f1d; /* màu cam đậm */
+}
+
+.section-header h2 {
+    display: inline-block;
+    background-color: #e76f1d; /* màu cam */
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0;
+    position: relative;
+    top: 3px; /* đẩy tiêu đề xuống khớp đường viền */
+}
+

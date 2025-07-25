@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div>
+        <div>
+            <div th:replace="base :: sidebar"></div>
+            <main class="container">
+                <div style="padding-top: 110px "></div>
+
+                <div class="w3-container" style="margin-left:200px">
+                    <div class="section-header">
+                        <h2>Danh sách giảng viên</h2>
+                    </div>
+
+                    <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+                        <!-- Nút bên trái -->
+                        <a th:href="@{/teachers/addorupdate}" class="btn btn-success">Thêm giảng viên</a>
+
+                        <!-- Form tìm kiếm bên phải -->
+                        <form th:action="@{/teachers}" class="d-flex">
+                            <input type="text" class="form-control me-2" placeholder="Nhập Họ Tên hoặc học vị" name="kw">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <table class="table">
+                            <tr>
+                                <th>Id</th>
+                                <th>Họ và tên</th>
+                                <th>Khoa</th>
+                                <th></th>
+                            </tr>
+                            <tr th:each="t: ${teachers}">
+                                <!--        <td>
+                                            <img th:src="${p.image}" width="200" class="rounded" />
+                                        </td>-->
+
+                                <td th:text="${t.id}"></td>
+                                <td th:text="${t.name}"></td>
+                                <td th:text="${t.facultyId.name}"></td>
+                                <td>
+
+                                    <a class="btn btn-info" data-bs-toggle="modal"
+                                       th:attr="data-bs-target='#teacherDetail' + ${t.id}">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+
+                                    <a th:href="@{'/teachers/addorupdate/' + ${t.id}}" class="btn btn-info"><i class="fa-solid fa-square-pen"></i></a>
+                                    <button th:onclick="/" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+
+                            <div class="modal fade" th:id="'teacherDetail' + ${t.id}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">THÔNG TIN GIẢNG VIÊN</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <img th:src="@{/image/Icon.png}" class="img-fluid" style="width: 300px" />
+
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    
+                                                    <label>Họ và tên</label>
+                                                    <input type="text" class="form-control" th:value="${t.name}" readonly>
+                                                    
+                                                    <label>Học vị</label>
+                                                    <input type="text" class="form-control" th:value="${t.education}" readonly>
+                                                    
+                                                    <label>Khoa</label>
+                                                    <input type="text" class="form-control" th:value="${t.facultyId.name}" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div th:replace="base :: footer" ></div>
+    </div>
+</body>
+</html>
+
+
+

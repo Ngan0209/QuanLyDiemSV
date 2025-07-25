@@ -1,0 +1,63 @@
+.navbar {
+  background-color: #1c5ebe !important;
+}
+
+.btn-primary {
+  background-color: #1e3d59 !important;
+  border-color: #1e3d59 !important;
+}
+.flex {
+    display: flex;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.header {
+    justify-content: space-evenly;
+    background-color: #1e3d59;
+    padding: 5px;
+    color: white;
+    font-size: 10px;
+}
+.w3-sidebar {
+    background-color: #1e3d59 !important;
+    color: white !important;
+}
+.w3-green,.w3-hover-green:hover{
+    background-color: #1c5ebe !important; 
+}
+.w3-btn,.w3-button {
+    padding: 13px 16px !important;
+}
+a.w3-button:hover {
+    text-decoration: underline;
+}
+
+/*nút học kì*/
+
+.btn-gradient-1 {
+      background: linear-gradient(to right, #003399, #3399ff); 
+      color: white;
+      font-weight: bold;
+    }
+    .btn-gradient-2 {
+      background: linear-gradient(to right, #373bff, #5f72ff); 
+      color: white;
+      font-weight: bold;
+    }
+    .btn-gradient-1:hover, .btn-gradient-2:hover {
+      opacity: 0.9;
+    }
+
