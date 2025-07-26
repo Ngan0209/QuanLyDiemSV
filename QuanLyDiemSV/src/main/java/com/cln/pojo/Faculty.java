@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  *
@@ -48,9 +48,9 @@ public class Faculty implements Serializable {
     @Column(name = "description")
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
-    private Set<Teacher> teacherSet;
+    private Collection<Teacher> teacherCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
-    private Set<Student> studentSet;
+    private Collection<Student> studentCollection;
 
     public Faculty() {
     }
@@ -88,20 +88,20 @@ public class Faculty implements Serializable {
         this.description = description;
     }
 
-    public Set<Teacher> getTeacherSet() {
-        return teacherSet;
+    public Collection<Teacher> getTeacherCollection() {
+        return teacherCollection;
     }
 
-    public void setTeacherSet(Set<Teacher> teacherSet) {
-        this.teacherSet = teacherSet;
+    public void setTeacherCollection(Collection<Teacher> teacherCollection) {
+        this.teacherCollection = teacherCollection;
     }
 
-    public Set<Student> getStudentSet() {
-        return studentSet;
+    public Collection<Student> getStudentCollection() {
+        return studentCollection;
     }
 
-    public void setStudentSet(Set<Student> studentSet) {
-        this.studentSet = studentSet;
+    public void setStudentCollection(Collection<Student> studentCollection) {
+        this.studentCollection = studentCollection;
     }
 
     @Override

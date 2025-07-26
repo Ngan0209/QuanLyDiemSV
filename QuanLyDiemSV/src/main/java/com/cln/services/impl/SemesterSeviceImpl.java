@@ -38,8 +38,8 @@ public class SemesterSeviceImpl implements SemesterService{
     }
 
     @Override
-    public List<Class> getClassesBySemesterId(int semesterId) {
-        return this.semesterRepository.getClassesBySemesterId(semesterId);
+    public List<Class> getClassesBySemesterId(int semesterId, Map<String, String> params) {
+        return this.semesterRepository.getClassesBySemesterId(semesterId, params);
     }
     
 }

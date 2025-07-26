@@ -17,5 +17,5 @@ public interface SemesterRepository {
     List<Semester> getSemesters(Map<String, String> params);
     Semester getSemesterById(int id);
     void addOrUpdateSemester(Semester p);
-    List<Class> getClassesBySemesterId(int semesterId);
+    List<Class> getClassesBySemesterId(int semesterId, Map<String, String> params);
 }

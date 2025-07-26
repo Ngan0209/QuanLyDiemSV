@@ -22,10 +22,8 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -63,7 +61,6 @@ public class Student implements Serializable {
     @NotNull
     @Column(name = "birthday")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     @Basic(optional = false)
     @NotNull
@@ -76,7 +73,7 @@ public class Student implements Serializable {
     @Column(name = "school_year")
     private String schoolYear;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
-    private Set<StudentClass> studentClassSet;
+    private Collection<StudentClass> studentClassCollection;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Faculty facultyId;
@@ -148,12 +145,12 @@ public class Student implements Serializable {
         this.schoolYear = schoolYear;
     }
 
-    public Set<StudentClass> getStudentClassSet() {
-        return studentClassSet;
+    public Collection<StudentClass> getStudentClassCollection() {
+        return studentClassCollection;
     }
 
-    public void setStudentClassSet(Set<StudentClass> studentClassSet) {
-        this.studentClassSet = studentClassSet;
+    public void setStudentClassCollection(Collection<StudentClass> studentClassCollection) {
+        this.studentClassCollection = studentClassCollection;
     }
 
     public Faculty getFacultyId() {

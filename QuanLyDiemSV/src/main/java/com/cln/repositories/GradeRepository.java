@@ -4,17 +4,15 @@
  */
 package com.cln.repositories;
 
+import com.cln.pojo.Grade;
+import com.cln.pojo.StudentClass;
 import java.util.List;
-import com.cln.pojo.Class;
-import com.cln.pojo.Student;
 import java.util.Map;
 
 /**
  *
  * @author LE NGAN
  */
-public interface ClassRepository {
-    List<Class> getClasses(Map<String, String> params);
-    Class getClassById(int id);
-    List<Student> getStudentByClassId(int classId, Map<String, String> params);
+public interface GradeRepository {
+    List<StudentClass> getStudentGradeByClassId(int classId, Map<String, String> parmas);
 }

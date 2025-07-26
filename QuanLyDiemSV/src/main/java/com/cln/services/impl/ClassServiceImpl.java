@@ -5,6 +5,7 @@
 package com.cln.services.impl;
 
 import com.cln.pojo.Class;
+import com.cln.pojo.Student;
 import com.cln.repositories.ClassRepository;
 import com.cln.services.ClassService;
 import java.util.List;
@@ -24,6 +25,16 @@ public class ClassServiceImpl implements ClassService{
     @Override
     public List<Class> getClasses(Map<String, String> params) {
         return this.classRepository.getClasses(params);
+    }
+
+    @Override
+    public List<Student> getStudentByClassId(int classId,  Map<String, String> params) {
+        return this.classRepository.getStudentByClassId(classId, params);
+    }
+
+    @Override
+    public Class getClassById(int id) {
+        return this.classRepository.getClassById(id);
     }
     
 }

@@ -15,10 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  *
@@ -40,11 +39,14 @@ public class StudentClass implements Serializable {
     @JoinColumn(name = "class_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Class classId;
+    @JoinColumn(name = "grade_id", referencedColumnName = "id")
+    @OneToOne
+    private Grade gradeId;
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Student studentId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentClassId")
-    private Set<Grade> gradeSet;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "studentClassId")
+    private Grade grade;
 
     public StudentClass() {
     }
@@ -69,6 +71,14 @@ public class StudentClass implements Serializable {
         this.classId = classId;
     }
 
+    public Grade getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(Grade gradeId) {
+        this.gradeId = gradeId;
+    }
+
     public Student getStudentId() {
         return studentId;
     }
@@ -77,12 +87,12 @@ public class StudentClass implements Serializable {
         this.studentId = studentId;
     }
 
-    public Set<Grade> getGradeSet() {
-        return gradeSet;
+    public Grade getGrade() {
+        return grade;
     }
 
-    public void setGradeSet(Set<Grade> gradeSet) {
-        this.gradeSet = gradeSet;
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 
     @Override

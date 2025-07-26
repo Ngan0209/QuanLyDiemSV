@@ -6,6 +6,7 @@ package com.cln.controllers;
 
 import com.cln.services.ClassService;
 import com.cln.services.SemesterService;
+import com.cln.services.StudentService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,22 +22,35 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class ClassController {
+
     @Autowired
-    private ClassService ClassService;
+    private ClassService classService;
     @Autowired
     private SemesterService semesterService;
-    
+    @Autowired
+    private StudentService studentService;
+
     @GetMapping("/classes/semesters")
-    public String listSemeter(Model model, @RequestParam Map<String, String> params){
+    public String listSemeter(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("semesters", this.semesterService.getSemesters(params));
+        model.addAttribute("action", "class");
         return "semesterClasses";
     }
-    
+
     @GetMapping("/classes/semesters/{semesterId}")
-    public String listClassesBySemester(Model model, @PathVariable(value = "semesterId") int id) {
-        model.addAttribute("classes", this.semesterService.getClassesBySemesterId(id));
+    public String listClassesBySemester(Model model, @PathVariable(value = "semesterId") int id, @RequestParam Map<String, String> params) {
+        model.addAttribute("classes", this.semesterService.getClassesBySemesterId(id, params));
         model.addAttribute("semester", this.semesterService.getSemesterById(id));
+        model.addAttribute("action", "class");
         return "classes";
     }
-    
+
+    @GetMapping(value = "/classes/{classId}/students", params = {"!action","!mode"})
+    public String listStudentsByClass(Model model, @PathVariable("classId") int classId, @RequestParam Map<String, String> params) {
+        model.addAttribute("students", this.classService.getStudentByClassId(classId, params));
+        model.addAttribute("class", this.classService.getClassById(classId));
+        model.addAttribute("action", "class");
+        return "studentsByClass";
+    }
+
 }

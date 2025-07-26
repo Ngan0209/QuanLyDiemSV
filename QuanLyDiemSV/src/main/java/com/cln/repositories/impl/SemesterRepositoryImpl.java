@@ -75,16 +75,27 @@ public class SemesterRepositoryImpl implements SemesterRepository {
     }
 
     @Override
-    public List<Class> getClassesBySemesterId(int semesterId) {
+    public List<Class> getClassesBySemesterId(int semesterId, Map<String, String> params) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
 
         CriteriaBuilder b = s.getCriteriaBuilder();
         CriteriaQuery<Class> q = b.createQuery(Class.class);
         Root<Class> root = q.from(Class.class);
         q.select(root);
+        
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            predicates.add(b.equal(root.get("semesterId").get("id"), semesterId));
+            String kwClass = params.get("kwClass");
+            if (kwClass != null && !kwClass.isEmpty()) {
+                Predicate namePrediacate = b.like(root.get("name"), String.format("%%%s%%", kwClass));
+                Predicate coursePrediacate = b.like(root.get("courseId").get("name"), String.format("%%%s%%", kwClass));
 
-        q.where(b.equal(root.get("semesterId").get("id"), semesterId));
-
+                predicates.add(b.or(namePrediacate,coursePrediacate));
+            }
+            
+            q.where(predicates.toArray(Predicate[]::new));
+        }
         Query query = s.createQuery(q);
         return query.getResultList();
     }

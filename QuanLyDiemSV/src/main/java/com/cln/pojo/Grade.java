@@ -12,14 +12,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  *
@@ -45,19 +45,18 @@ public class Grade implements Serializable {
     @NotNull
     @Column(name = "finall")
     private short finall;
-    @Basic(optional = false)
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "midterm")
-    private float midterm;
-    @Basic(optional = false)
-    @NotNull
+    private Float midterm;
     @Column(name = "final_exem")
-    private float finalExem;
+    private Float finalExem;
+    @OneToOne(mappedBy = "gradeId")
+    private StudentClass studentClass;
     @JoinColumn(name = "student_class_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private StudentClass studentClassId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradeId")
-    private Set<Typegrade> typegradeSet;
+    private Collection<Typegrade> typegradeCollection;
 
     public Grade() {
     }
@@ -66,11 +65,9 @@ public class Grade implements Serializable {
         this.id = id;
     }
 
-    public Grade(Long id, short finall, float midterm, float finalExem) {
+    public Grade(Long id, short finall) {
         this.id = id;
         this.finall = finall;
-        this.midterm = midterm;
-        this.finalExem = finalExem;
     }
 
     public Long getId() {
@@ -89,20 +86,28 @@ public class Grade implements Serializable {
         this.finall = finall;
     }
 
-    public float getMidterm() {
+    public Float getMidterm() {
         return midterm;
     }
 
-    public void setMidterm(float midterm) {
+    public void setMidterm(Float midterm) {
         this.midterm = midterm;
     }
 
-    public float getFinalExem() {
+    public Float getFinalExem() {
         return finalExem;
     }
 
-    public void setFinalExem(float finalExem) {
+    public void setFinalExem(Float finalExem) {
         this.finalExem = finalExem;
+    }
+
+    public StudentClass getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(StudentClass studentClass) {
+        this.studentClass = studentClass;
     }
 
     public StudentClass getStudentClassId() {
@@ -113,12 +118,12 @@ public class Grade implements Serializable {
         this.studentClassId = studentClassId;
     }
 
-    public Set<Typegrade> getTypegradeSet() {
-        return typegradeSet;
+    public Collection<Typegrade> getTypegradeCollection() {
+        return typegradeCollection;
     }
 
-    public void setTypegradeSet(Set<Typegrade> typegradeSet) {
-        this.typegradeSet = typegradeSet;
+    public void setTypegradeCollection(Collection<Typegrade> typegradeCollection) {
+        this.typegradeCollection = typegradeCollection;
     }
 
     @Override

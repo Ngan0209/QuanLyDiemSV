@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  *
@@ -53,7 +53,7 @@ public class Course implements Serializable {
     @Column(name = "credit_hours")
     private int creditHours;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseId")
-    private Set<Class> classSet;
+    private Collection<Class> classCollection;
 
     public Course() {
     }
@@ -100,12 +100,12 @@ public class Course implements Serializable {
         this.creditHours = creditHours;
     }
 
-    public Set<Class> getClassSet() {
-        return classSet;
+    public Collection<Class> getClassCollection() {
+        return classCollection;
     }
 
-    public void setClassSet(Set<Class> classSet) {
-        this.classSet = classSet;
+    public void setClassCollection(Collection<Class> classCollection) {
+        this.classCollection = classCollection;
     }
 
     @Override
