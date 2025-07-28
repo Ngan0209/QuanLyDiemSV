@@ -26,5 +26,27 @@ public class GradeServiceImpl implements GradeService{
     public List<StudentClass> getStudentGradeByClassId(int classId, Map<String, String> parmas) {
         return this.gradeRepository.getStudentGradeByClassId(classId, parmas);
     }
+
+    @Override
+    public void addOrUpdateGrade(Grade grades) {
+        this.gradeRepository.addOrUpdateGrade(grades);
+    }
+
+    @Override
+    public void addTypeGradeColumnForClass(int classId, String columnName) {
+        this.gradeRepository.addTypeGradeColumnForClass(classId, columnName);
+    }
+
+    @Override
+    public void saveGrades(List<Grade> grades) {
+        this.gradeRepository.saveGrades(grades);
+    }
+
+    @Override
+    public void averageScores(List<StudentClass> studentClasses) {
+        this.gradeRepository.averageScores(studentClasses);
+    }
+
+    
     
 }

@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  *
@@ -44,7 +44,7 @@ public class Semester implements Serializable {
     @Column(name = "name")
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "semesterId")
-    private Collection<Class> classCollection;
+    private Set<Class> classSet;
 
     public Semester() {
     }
@@ -74,12 +74,12 @@ public class Semester implements Serializable {
         this.name = name;
     }
 
-    public Collection<Class> getClassCollection() {
-        return classCollection;
+    public Set<Class> getClassSet() {
+        return classSet;
     }
 
-    public void setClassCollection(Collection<Class> classCollection) {
-        this.classCollection = classCollection;
+    public void setClassSet(Set<Class> classSet) {
+        this.classSet = classSet;
     }
 
     @Override

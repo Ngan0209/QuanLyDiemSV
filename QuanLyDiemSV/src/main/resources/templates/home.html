@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <div th:replace="base :: resources"></div>
+    <link rel="stylesheet" th:href="@{/css/stat.css}">
+    <script th:src="@{/js/stat.js}"></script>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+
+    <div>
+        <div>
+            <div th:replace="base :: sidebar"></div>
+
+            <main class="container">
+                <div style="padding-top: 110px"></div>
+
+                <div class="w3-container " style="margin-left:150px">
+
+                    <div class="dashboard">
+                        <div class="card blue">
+                            <div class="number" th:text="${countFaculty}"></div>
+                            <div class="title">Khoa</div>
+                            <div class="icon">🏛️</div>
+                            <a th:href="@{/faculties}" class="link">Xem thêm ➤</a>
+                        </div>
+
+                        <div class="card green">
+                            <div class="number" th:text="${countClass}"></div>
+                            <div class="title">Lớp</div>
+                            <div class="icon">🗂️</div>
+                            <a th:href="@{/classes/semesters}" class="link">Xem thêm ➤</a>
+                        </div>
+
+                        <div class="card orange">
+                            <div class="number" th:text="${countStudent}"></div>
+                            <div class="title">Sinh viên</div>
+                            <div class="icon">👤</div>
+                            <a th:href="@{/students}" class="link">Xem thêm ➤</a>
+                        </div>
+
+                        <div class="card red">
+                            <div class="number" th:text="${countCourse}"></div>
+                            <div class="title">Môn học</div>
+                            <div class="icon">📊</div>
+                            <a th:href="@{/courses}" class="link">Xem thêm ➤</a>
+                        </div>
+
+                        <div class="card orange">
+                            <div class="number" th:text="${countTeacher}"></div>
+                            <div class="title">Giảng viên</div>
+                            <div class="icon">👨‍🏫</div>
+                            <a th:href="@{/teachers}" class="link">Xem thêm ➤</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div  style="margin-left:200px; margin-top: 5px">
+                    <h3 style="color: red; font-weight: bold;" class="mt-2 mb-2">Thống kê sinh viên các khóa</h3>
+                    <div class="row">
+                        <div class="col-md-4 col-5">
+                            <table class="table">
+                                <tr>
+                                    <th>Niên khóa</th>
+                                    <th>Số lượng SV</th>
+                                </tr>
+                                <tr th:each="entry : ${countStudentBySchoolyear}">
+                                    <td th:text="${entry[0]}"></td>
+                                    <td th:text="${entry[1]}"></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="col-md-7 col-6">
+                            <canvas id="countStudentBySchoolyear" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div  style="margin-left:200px; margin-top: 5px">
+                    <h3 style="color: red; font-weight: bold;" class="mt-2 mb-2">Thống kê giảng viên</h3>
+                    <div class="row">
+                        <div class="col-md-4 col-5">
+                            <table class="table">
+                                <tr>
+                                    <th>Học vị</th>
+                                    <th>Số lượng GV</th>
+                                </tr>
+                                <tr th:each="entry : ${countTeacherByEducation}">
+                                    <td th:text="${entry[0]}"></td>
+                                    <td th:text="${entry[1]}"></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="col-md-7 col-6">
+                            <canvas id="countTeacherByEducation" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <div th:replace="base :: footer"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        window.onload = function () {
+        let studentStats = [[${countStudentBySchoolyear}]];
+        let teacherStats = [[${countTeacherByEducation}]];
+        drawBarChart('countStudentBySchoolyear', studentStats, '# Sinh viên theo niên khóa');
+        drawBarChart('countTeacherByEducation', teacherStats, '# Giảng viên theo học vị');
+        };
+    </script>
+
+
+
+</body>
+</html>

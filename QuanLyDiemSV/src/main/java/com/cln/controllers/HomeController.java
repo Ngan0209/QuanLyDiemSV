@@ -6,6 +6,7 @@ package com.cln.controllers;
 
 import com.cln.pojo.Course;
 import com.cln.services.CourseService;
+import com.cln.services.StatService;
 import com.cln.services.StudentService;
 import jakarta.persistence.Query;
 import java.util.Map;
@@ -25,13 +26,20 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class HomeController {
-    @Autowired
-    private CourseService courseService;
     
-    @RequestMapping("/")
-    public String index(Model model, @RequestParam Map<String, String> params){
-        model.addAttribute("courses",this.courseService.getCourses(params));
-        return "index";
+    @Autowired
+    private StatService statService;
+    
+    @GetMapping("/")
+    public String index(Model model){
+        model.addAttribute("countStudent", this.statService.countStudents());
+        model.addAttribute("countFaculty", this.statService.countFaculties());
+        model.addAttribute("countCourse", this.statService.countCourses());
+        model.addAttribute("countClass", this.statService.countClasses());
+        model.addAttribute("countTeacher", this.statService.countTeachers());
+        
+        model.addAttribute("countStudentBySchoolyear", this.statService.countStudentBySchoolYear());
+        model.addAttribute("countTeacherByEducation", this.statService.countTeacherByEducation());
+        return "home";
     }
-
 }

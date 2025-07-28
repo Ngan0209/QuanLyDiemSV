@@ -15,4 +15,8 @@ import java.util.Map;
  */
 public interface GradeRepository {
     List<StudentClass> getStudentGradeByClassId(int classId, Map<String, String> parmas);
+    void addOrUpdateGrade(Grade grades);
+    void addTypeGradeColumnForClass(int classId, String columnName);
+    void saveGrades(List<Grade> grades);
+    void averageScores(List<StudentClass> studentClasses);
 }

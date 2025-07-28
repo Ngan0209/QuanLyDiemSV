@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
-
+                        <a th:href="@{'/grade/classes/'+ ${classId} + '/students/add'}" class="btn btn-danger"> Nhập điểm</a>
                         <!-- Form tìm kiếm bên phải -->
                         <form th:action="@{'/grade/classes/' + ${classId} + '/students'}" method="get" class="d-flex">
                             <div>
@@ -30,28 +30,48 @@
                                 </div>
                             </div>
                         </form>
+
                     </div>
 
                     <div>
+
                         <table class="table">
                             <tr>
                                 <th>Id</th>
                                 <th>MSSV</th>
                                 <th>Họ và tên</th>
                                 <th>Cuối kì</th>
-                                <th>Giữa kì</th>
-                                <th></th>
+                                <th>Giữa kì </th>
+
+                                <th th:each="tg : ${grades[0].grade != null && grades[0].grade.typegradeSet != null ? grades[0].grade.typegradeSet : {}}">
+                                    <span th:text="${tg.name}"></span>
+                                    <button 
+                                       th:onclick="'deleteTypegradeColumn(\'' + @{/api/grade/classes/{id}/delete-column(id=${classId}, name=${tg.name})} + '\')'">
+                                        <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                    </button>
+
+
+                                    <!--                                    <a th:href="@{'/api/grade/classes/' + ${classId} + '/delete-column' (name=${tg.name})}"
+                                                                           th:onclick="'deleteTypegradeColumn(\''+ @{/api/grade/classes/{id}/delete-column(name=${tg.name}) (id=${classId})} + '\')'">
+                                                                            <i class="fa-solid fa-circle-xmark text-danger"></i>
+                                                                        </a>-->
+
+                                </th>
+
+                                <th>Điểm TB</th>
                             </tr>
 
                             <tr th:each="s: ${grades}">
                                 <td th:text="${s.studentId.id}"></td>
                                 <td th:text="${s.studentId.studentCode}"></td>
                                 <td th:text="${s.studentId.name}"></td>
-                                <td th:text="${s.grade != null ? s.grade.midterm : '--'}"></td>
-                                <td th:text="${s.grade != null ? s.grade.finalExem : '--'}"></td>
-                                <td>
-                                    <a th:href="@{/grade/classes/{classId}/students/{studentId}/add(classId=${classId}, studentId=${s.studentId.id})}" class="btn btn-danger">Nhập điểm</a>
+                                <td th:text="${s.grade.finalExem != null ? s.grade.finalExem : '--'}"></td>
+                                <td th:text="${s.grade.midterm != null ? s.grade.midterm : '--'}"></td>
+                                <td th:if="${s.grade.typegradeSet != null and !#lists.isEmpty(s.grade.typegradeSet)}"
+                                    th:each="tg : ${s.grade.typegradeSet}" 
+                                    th:text="${tg.grade != null ? tg.grade : '--'}">
                                 </td>
+                                <td th:text="${s.grade.averageScore != null ? s.grade.averageScore : '--'}"></td>
                             </tr>
                         </table>
                     </div>

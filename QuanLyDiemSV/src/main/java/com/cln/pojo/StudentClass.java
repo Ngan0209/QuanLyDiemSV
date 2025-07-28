@@ -39,9 +39,6 @@ public class StudentClass implements Serializable {
     @JoinColumn(name = "class_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Class classId;
-    @JoinColumn(name = "grade_id", referencedColumnName = "id")
-    @OneToOne
-    private Grade gradeId;
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Student studentId;
@@ -69,14 +66,6 @@ public class StudentClass implements Serializable {
 
     public void setClassId(Class classId) {
         this.classId = classId;
-    }
-
-    public Grade getGradeId() {
-        return gradeId;
-    }
-
-    public void setGradeId(Grade gradeId) {
-        this.gradeId = gradeId;
     }
 
     public Student getStudentId() {

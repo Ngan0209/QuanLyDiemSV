@@ -22,8 +22,8 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 /**
  *
@@ -73,7 +73,7 @@ public class Student implements Serializable {
     @Column(name = "school_year")
     private String schoolYear;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "studentId")
-    private Collection<StudentClass> studentClassCollection;
+    private Set<StudentClass> studentClassSet;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Faculty facultyId;
@@ -145,12 +145,12 @@ public class Student implements Serializable {
         this.schoolYear = schoolYear;
     }
 
-    public Collection<StudentClass> getStudentClassCollection() {
-        return studentClassCollection;
+    public Set<StudentClass> getStudentClassSet() {
+        return studentClassSet;
     }
 
-    public void setStudentClassCollection(Collection<StudentClass> studentClassCollection) {
-        this.studentClassCollection = studentClassCollection;
+    public void setStudentClassSet(Set<StudentClass> studentClassSet) {
+        this.studentClassSet = studentClassSet;
     }
 
     public Faculty getFacultyId() {

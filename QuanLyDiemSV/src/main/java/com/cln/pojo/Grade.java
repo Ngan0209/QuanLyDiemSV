@@ -8,6 +8,7 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +20,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -32,7 +34,8 @@ import java.util.Collection;
     @NamedQuery(name = "Grade.findById", query = "SELECT g FROM Grade g WHERE g.id = :id"),
     @NamedQuery(name = "Grade.findByFinall", query = "SELECT g FROM Grade g WHERE g.finall = :finall"),
     @NamedQuery(name = "Grade.findByMidterm", query = "SELECT g FROM Grade g WHERE g.midterm = :midterm"),
-    @NamedQuery(name = "Grade.findByFinalExem", query = "SELECT g FROM Grade g WHERE g.finalExem = :finalExem")})
+    @NamedQuery(name = "Grade.findByFinalExem", query = "SELECT g FROM Grade g WHERE g.finalExem = :finalExem"),
+    @NamedQuery(name = "Grade.findByAverageScore", query = "SELECT g FROM Grade g WHERE g.averageScore = :averageScore")})
 public class Grade implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,13 +53,13 @@ public class Grade implements Serializable {
     private Float midterm;
     @Column(name = "final_exem")
     private Float finalExem;
-    @OneToOne(mappedBy = "gradeId")
-    private StudentClass studentClass;
+    @Column(name = "averageScore")
+    private Float averageScore;
     @JoinColumn(name = "student_class_id", referencedColumnName = "id")
     @OneToOne(optional = false)
     private StudentClass studentClassId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradeId")
-    private Collection<Typegrade> typegradeCollection;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "gradeId", fetch = FetchType.EAGER)
+    private List<Typegrade> typegradeSet;
 
     public Grade() {
     }
@@ -102,12 +105,12 @@ public class Grade implements Serializable {
         this.finalExem = finalExem;
     }
 
-    public StudentClass getStudentClass() {
-        return studentClass;
+    public Float getAverageScore() {
+        return averageScore;
     }
 
-    public void setStudentClass(StudentClass studentClass) {
-        this.studentClass = studentClass;
+    public void setAverageScore(Float averageScore) {
+        this.averageScore = averageScore;
     }
 
     public StudentClass getStudentClassId() {
@@ -118,12 +121,12 @@ public class Grade implements Serializable {
         this.studentClassId = studentClassId;
     }
 
-    public Collection<Typegrade> getTypegradeCollection() {
-        return typegradeCollection;
+    public List<Typegrade> getTypegradeSet() {
+        return typegradeSet;
     }
 
-    public void setTypegradeCollection(Collection<Typegrade> typegradeCollection) {
-        this.typegradeCollection = typegradeCollection;
+    public void setTypegradeSet(List<Typegrade> typegradeSet) {
+        this.typegradeSet = typegradeSet;
     }
 
     @Override

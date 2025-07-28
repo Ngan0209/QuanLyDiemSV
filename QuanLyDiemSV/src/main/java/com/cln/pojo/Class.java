@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  *
@@ -46,7 +46,7 @@ public class Class implements Serializable {
     @Column(name = "name")
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classId")
-    private Collection<StudentClass> studentClassCollection;
+    private Set<StudentClass> studentClassSet;
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Course courseId;
@@ -85,12 +85,12 @@ public class Class implements Serializable {
         this.name = name;
     }
 
-    public Collection<StudentClass> getStudentClassCollection() {
-        return studentClassCollection;
+    public Set<StudentClass> getStudentClassSet() {
+        return studentClassSet;
     }
 
-    public void setStudentClassCollection(Collection<StudentClass> studentClassCollection) {
-        this.studentClassCollection = studentClassCollection;
+    public void setStudentClassSet(Set<StudentClass> studentClassSet) {
+        this.studentClassSet = studentClassSet;
     }
 
     public Course getCourseId() {

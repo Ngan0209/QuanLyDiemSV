@@ -4,21 +4,30 @@
  */
 package com.cln.controllers;
 
+import com.cln.dto.GradeListWrapper;
 import com.cln.pojo.Grade;
+import com.cln.pojo.StudentClass;
+import com.cln.pojo.Typegrade;
 import com.cln.services.ClassService;
 import com.cln.services.GradeService;
 import com.cln.services.SemesterService;
 import com.cln.services.StudentService;
+import com.cln.services.TypeGradeService;
+import jakarta.data.repository.Delete;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
@@ -40,6 +49,9 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
 
+    @Autowired
+    private TypeGradeService typeGradeService;
+
     @GetMapping("/classes/semesters")
     public String listSemesters(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("semesters", this.semesterService.getSemesters(params));
@@ -56,28 +68,52 @@ public class GradeController {
     }
 
     @GetMapping(value = "/classes/{classId}/students")
-    public String listStudentsForGrading(Model model, @PathVariable("classId") int classId, @RequestParam Map<String, String> params) {
+    public String listStudentsForGrading(Model model,
+            @PathVariable("classId") int classId,
+            @RequestParam Map<String, String> params) {
+
+        List<StudentClass> grades = this.gradeService.getStudentGradeByClassId(classId, params);
+
+        gradeService.averageScores(grades); // Gán averageScore cho từng grade
+
         model.addAttribute("students", this.classService.getStudentByClassId(classId, params));
         model.addAttribute("class", this.classService.getClassById(classId));
-        model.addAttribute("grades", this.gradeService.getStudentGradeByClassId(classId, params));
-        model.addAttribute("action", "grade"); 
-        return "grade";
+        model.addAttribute("grades", grades); // ✅ chỉ cần 1 key thôi
+        model.addAttribute("action", "grade");
+
+        return "grade"; 
     }
 
-    @GetMapping("/classes/{classId}/students/{studentId}/add")
-    public String addGrade(Model model, @PathVariable("classId") int classId, @PathVariable("studentId") int studentId) {
-        model.addAttribute("student", this.studentService.getStudentById(studentId));
+    @GetMapping("/classes/{classId}/students/add")
+    public String addGrade(Model model, @PathVariable("classId") int classId, @RequestParam Map<String, String> params) {
         model.addAttribute("class", this.classService.getClassById(classId));
-        model.addAttribute("grade", new Grade());
+        model.addAttribute("grades", this.gradeService.getStudentGradeByClassId(classId, params));
         return "addOrUpdateGrade";
     }
 
-    @PostMapping("/classes/{classId}/students/{studentId}/add")
+    @PostMapping("/classes/{classId}/students/add")
     public String saveGrade(@PathVariable("classId") int classId,
-                            @PathVariable("studentId") int studentId,
-                            @ModelAttribute(value = "grade") Grade grade) {
-        this.gradeService.addOrUpdateGrade(classId, studentId, grade);
-        return "redirect:/classes/" + classId + "/students";
-    }
-}
+            @ModelAttribute("grades") GradeListWrapper wrapper) {
+        this.gradeService.saveGrades(wrapper.getGrades());
+        return "redirect:/grade/classes/" + classId + "/students";
 
+    }
+
+    @GetMapping("/classes/{classId}/add-column")
+    public String addTypeGrade(@PathVariable("classId") int classId) {
+        return "addTypeGrade";
+    }
+
+    @PostMapping("/classes/{classId}/add-column")
+    public String addTypeGradeColumn(@PathVariable("classId") int classId, @RequestParam("columnName") String columnName) {
+        this.gradeService.addTypeGradeColumnForClass(classId, columnName);
+        return "redirect:/grade/classes/" + classId + "/students";
+    }
+
+    @GetMapping("/classes/{classId}/delete-column")
+    public String deleteTypeGradeColumn(@PathVariable("classId") int classId, @RequestParam("name") String name) {
+        this.typeGradeService.deleteTypeGradeColumn(name, classId);
+        return "redirect:/grade/classes/" + classId + "/students";
+    }
+
+}

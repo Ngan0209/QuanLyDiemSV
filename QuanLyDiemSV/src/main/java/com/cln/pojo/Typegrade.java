@@ -43,10 +43,9 @@ public class Typegrade implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "grade")
-    private long grade;
+    private Float grade;
     @JoinColumn(name = "grade_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Grade gradeId;
@@ -58,10 +57,9 @@ public class Typegrade implements Serializable {
         this.id = id;
     }
 
-    public Typegrade(Long id, String name, long grade) {
+    public Typegrade(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.grade = grade;
     }
 
     public Long getId() {
@@ -80,11 +78,11 @@ public class Typegrade implements Serializable {
         this.name = name;
     }
 
-    public long getGrade() {
+    public Float getGrade() {
         return grade;
     }
 
-    public void setGrade(long grade) {
+    public void setGrade(Float grade) {
         this.grade = grade;
     }
 
