@@ -27,9 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class StudentRepositoryImpl implements StudentRepository{
+public class StudentRepositoryImpl implements StudentRepository {
+
     @Autowired
-    private LocalSessionFactoryBean sessionFactory; 
+    private LocalSessionFactoryBean sessionFactory;
 
     @Override
     public List<Student> getStudents(Map<String, String> params) {
@@ -38,30 +39,30 @@ public class StudentRepositoryImpl implements StudentRepository{
         CriteriaQuery<Student> q = b.createQuery(Student.class);
         Root root = q.from(Student.class);
         q.select(root);
-        
-        if(params !=null){
-            List<Predicate> predicates = new ArrayList<>();
-            
-            String kw = params.get("kw");
-            if(kw != null && !kw.isEmpty()){
-                Predicate namePredicate = b.like(root.get("name"), String.format("%%%s%%",kw));
-                Predicate codePredicate = b.like(root.get("studentCode"), String.format("%%%s%%",kw));
 
-                predicates.add(b.or(namePredicate, codePredicate)); 
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                Predicate namePredicate = b.like(root.get("name"), String.format("%%%s%%", kw));
+                Predicate codePredicate = b.like(root.get("studentCode"), String.format("%%%s%%", kw));
+
+                predicates.add(b.or(namePredicate, codePredicate));
             }
-            
+
             String schoolYear = params.get("schoolYear");
-            if(schoolYear != null && !schoolYear.isEmpty()){
-                predicates.add(b.like(root.get("schoolYear"), String.format("%%%s%%",schoolYear)));
+            if (schoolYear != null && !schoolYear.isEmpty()) {
+                predicates.add(b.like(root.get("schoolYear"), String.format("%%%s%%", schoolYear)));
             }
-            
+
             q.where(predicates.toArray(Predicate[]::new));
         }
-        
+
         Query query = s.createQuery(q);
         return query.getResultList();
     }
-    
+
     @Override
     public Student getStudentById(int id) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
@@ -77,7 +78,22 @@ public class StudentRepositoryImpl implements StudentRepository{
         } else {
             s.merge(p);
         }
-
     }
-    
+
+    @Override
+    public Student getStudentsWithoutUser(String studentCode) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Student> query = cb.createQuery(Student.class);
+        Root<Student> root = query.from(Student.class);
+
+        Predicate byCode = cb.equal(root.get("studentCode"), studentCode);
+        Predicate noUser = cb.isNull(root.get("userId"));
+
+        // userId là field kiểu User, kiểm tra null
+        query.select(root).where(cb.isNull(root.get("userId")));query.select(root).where(cb.and(byCode, noUser));
+
+        return session.createQuery(query).getSingleResult();
+    }
+
 }

@@ -4,17 +4,15 @@
  */
 package com.cln.repositories;
 
-import com.cln.pojo.Student;
+import com.cln.pojo.User;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author LE NGAN
  */
-public interface StudentRepository {
-    List<Student> getStudents(Map<String, String> params);
-    Student getStudentById(int id);
-    void addOrUpdateStudent(Student p);
-    Student getStudentsWithoutUser(String studentCode);
+public interface UserRepository {
+    boolean registerUser(User user);
+    List<User> getUser(String usename);
+    List<User> getUsersByRole(String role);
 }

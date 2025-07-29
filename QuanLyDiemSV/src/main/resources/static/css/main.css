@@ -19,3 +19,18 @@
     top: 3px; /* đẩy tiêu đề xuống khớp đường viền */
 }
 
+.login-form-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.login-form {
+    width: 600px; /* nhỏ lại */
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+

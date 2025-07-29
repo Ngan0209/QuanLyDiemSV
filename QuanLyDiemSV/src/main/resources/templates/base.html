@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      mlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">>
+      mlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <head>
         <title>Trang chủ</title>
     <th:context th:fragment="resources">
@@ -13,6 +13,7 @@
         
         <link rel="stylesheet" th:href="@{/css/navbar.css}">
         <link rel="stylesheet" th:href="@{/css/main.css}">
+        <link rel="stylesheet" th:href="@{/css/stat.css}">
         <script th:src="@{/js/delete.js}"></script>
     </th:context>
 </head>
@@ -35,21 +36,21 @@
         </div> 
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <img th:src="@{/image/Logo.png}" alt="Logo" style="width: 300px"/>
-            <div class="container-fluid">
-                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+            <div class="container-fluid me-2">
+                <span class="navbar-brand" sec:authorize="isAuthenticated()">Xin chào, <span sec:authentication="name"></span></span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                            <a class="nav-link" th:href="@{/login}" sec:authorize="isAnonymous()">Đăng nhập</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                            <a class="nav-link" th:href="@{/register}" sec:authorize="isAnonymous()">Đăng ký</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                            <a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Đăng xuất</a>
                         </li>
                     </ul>
 
@@ -60,7 +61,7 @@
     <div th:fragment="sidebar">
         <div class="w3-sidebar w3-bar-block w3-light-grey w3-card " style="width:230px; margin-top: 103px;">
             <a th:href="@{/}" class="w3-bar-item w3-button"><i class="fa-solid fa-house"></i> Trang chủ</a>
-            <a th:href="@{/}" class="w3-bar-item w3-button"><i class="fa-solid fa-user"></i> Quản lý tài khoản</a>
+            <a th:href="@{/users}" class="w3-bar-item w3-button"><i class="fa-solid fa-user"></i> Quản lý tài khoản</a>
             <a th:href="@{/faculties}" class="w3-bar-item w3-button"><i class="fa-solid fa-building-columns"></i> khoa</a>
             <a th:href="@{/classes/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-school-flag"></i> Lớp học</a>
             <a th:href="@{/students}" class="w3-bar-item w3-button"><i class="fa-solid fa-graduation-cap"></i> Quản lý sinh viên</a>

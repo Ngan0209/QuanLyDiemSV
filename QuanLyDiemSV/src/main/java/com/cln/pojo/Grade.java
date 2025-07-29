@@ -18,6 +18,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
@@ -34,8 +35,7 @@ import java.util.Set;
     @NamedQuery(name = "Grade.findById", query = "SELECT g FROM Grade g WHERE g.id = :id"),
     @NamedQuery(name = "Grade.findByFinall", query = "SELECT g FROM Grade g WHERE g.finall = :finall"),
     @NamedQuery(name = "Grade.findByMidterm", query = "SELECT g FROM Grade g WHERE g.midterm = :midterm"),
-    @NamedQuery(name = "Grade.findByFinalExem", query = "SELECT g FROM Grade g WHERE g.finalExem = :finalExem"),
-    @NamedQuery(name = "Grade.findByAverageScore", query = "SELECT g FROM Grade g WHERE g.averageScore = :averageScore")})
+    @NamedQuery(name = "Grade.findByFinalExem", query = "SELECT g FROM Grade g WHERE g.finalExem = :finalExem")})
 public class Grade implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,13 +53,14 @@ public class Grade implements Serializable {
     private Float midterm;
     @Column(name = "final_exem")
     private Float finalExem;
-    @Column(name = "averageScore")
-    private Float averageScore;
     @JoinColumn(name = "student_class_id", referencedColumnName = "id")
     @OneToOne(optional = false)
     private StudentClass studentClassId;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "gradeId", fetch = FetchType.EAGER)
     private List<Typegrade> typegradeSet;
+    
+    @Transient
+    private Float averageScore;
 
     public Grade() {
     }
@@ -105,14 +106,6 @@ public class Grade implements Serializable {
         this.finalExem = finalExem;
     }
 
-    public Float getAverageScore() {
-        return averageScore;
-    }
-
-    public void setAverageScore(Float averageScore) {
-        this.averageScore = averageScore;
-    }
-
     public StudentClass getStudentClassId() {
         return studentClassId;
     }
@@ -152,6 +145,20 @@ public class Grade implements Serializable {
     @Override
     public String toString() {
         return "com.cln.pojo.Grade[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the averageScore
+     */
+    public Float getAverageScore() {
+        return averageScore;
+    }
+
+    /**
+     * @param averageScore the averageScore to set
+     */
+    public void setAverageScore(Float averageScore) {
+        this.averageScore = averageScore;
     }
     
 }

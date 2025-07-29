@@ -16,4 +16,5 @@ public interface StudentService {
     List<Student> getStudents(Map<String,String> params);
     Student getStudentById(int id);
     void addOrUpdateStudent(Student p);
+    Student getStudentsWithoutUser(String studentCode);
 }

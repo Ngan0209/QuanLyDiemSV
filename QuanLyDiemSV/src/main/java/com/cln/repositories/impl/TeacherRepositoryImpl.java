@@ -38,25 +38,25 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         CriteriaQuery<Teacher> q = b.createQuery(Teacher.class);
         Root root = q.from(Teacher.class);
         q.select(root);
-        
-        if(params !=null){
+
+        if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
-            
+
             String kw = params.get("kw");
-            if(kw != null && !kw.isEmpty()){
-                Predicate namePredicate = b.like(root.get("name"), String.format("%%%s%%",kw));
-                Predicate eduPredicate = b.like(root.get("education"), String.format("%%%s%%",kw));
-                
-                predicates.add(b.or(namePredicate, eduPredicate)); 
+            if (kw != null && !kw.isEmpty()) {
+                Predicate namePredicate = b.like(root.get("name"), String.format("%%%s%%", kw));
+                Predicate eduPredicate = b.like(root.get("education"), String.format("%%%s%%", kw));
+
+                predicates.add(b.or(namePredicate, eduPredicate));
             }
-            
+
             q.where(predicates.toArray(Predicate[]::new));
         }
-        
+
         Query query = s.createQuery(q);
         return query.getResultList();
     }
-    
+
     @Override
     public Teacher getTeacherById(int id) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
@@ -72,7 +72,19 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         } else {
             s.merge(p);
         }
+    }
 
+    @Override
+    public List<Teacher> getTeachersWithoutUser() {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Teacher> query = cb.createQuery(Teacher.class);
+        Root<Teacher> root = query.from(Teacher.class);
+
+        // userId là field kiểu User, kiểm tra null
+        query.select(root).where(cb.isNull(root.get("userId")));
+
+        return session.createQuery(query).getResultList();
     }
 
 }

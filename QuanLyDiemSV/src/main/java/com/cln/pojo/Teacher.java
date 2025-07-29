@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -55,7 +56,7 @@ public class Teacher implements Serializable {
     @ManyToOne(optional = false)
     private Faculty facultyId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne
+    @OneToOne
     private User userId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId")
     private Set<Class> classSet;

@@ -14,5 +14,6 @@
     <class>com.cln.pojo.Semester</class>
     <class>navbar.css</class>
     <class>base.html</class>
+    <class>com.cln.pojo.NewEntity</class>
   </persistence-unit>
 </persistence>

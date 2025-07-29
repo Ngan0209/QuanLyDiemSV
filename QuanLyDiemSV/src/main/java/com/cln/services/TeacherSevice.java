@@ -17,4 +17,5 @@ public interface TeacherSevice {
     List<Teacher> getTeachers(Map<String, String> params);
     Teacher getTeacherById(int id);
     void addOrUpdateTeacher(Teacher p);
+    List<Teacher> getTeachersWithoutUser();
 }

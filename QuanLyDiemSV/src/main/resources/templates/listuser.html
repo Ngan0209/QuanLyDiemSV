@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <div>
+        <div>
+            <div th:replace="base :: sidebar"></div>
+            <main class="container">
+                <div style="padding-top: 110px "></div>
+
+                <div class="w3-container" style="margin-left:200px">
+                    <div class="section-header">
+                        <h2>Danh sách tài khoản</h2>
+                    </div>
+
+                    <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
+
+                        <!-- Form tìm kiếm bên phải -->
+                        <form th:action="@{/}" class="d-flex">
+                            <input type="text" class="form-control me-2" placeholder="Nhập từ khóa" name="kw">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <table class="table">
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Họ tên</th>
+                                <th></th>
+                                <th></th>
+
+                            </tr>
+                            <tr th:each="s: ${users}">
+                                <td th:text="${s.username}"></td>
+                                <td th:text="${s.email}"></td>
+                                <td th:if="${s.student != null}" th:text="${s.student.name}"></td>
+                                <td th:unless="${s.student != null}"></td>
+
+                                <!-- Mã sinh viên -->
+                                <td th:if="${s.student != null}" th:text="${s.student.studentCode}"></td>
+                                <td th:unless="${s.student != null}"></td>
+
+                                <!-- Họ tên giáo viên -->
+                                <td th:if="${s.teacher != null}" th:text="${s.teacher.name}"></td>
+                                <td th:unless="${s.teacher != null}"></td>
+
+                                <!-- Trình độ giáo viên -->
+                                <td th:if="${s.teacher != null}" th:text="${s.teacher.education}"></td>
+                                <td th:unless="${s.teacher != null}"></td>
+                                <!--                                <td th:if="${s.student != null}" th:text="${s.student.name}"></td>
+                                                                <td th:if="${s.student != null}" th:text="${s.student.studentCode}""></td>
+                                                                <td th:if="${s.teacher != null}" th:text="${s.teacher.name}"></td>
+                                                                <td th:if="${s.teacher != null}" th:text="${s.teacher.education}"}"></td>-->
+
+                                <td>
+                                    <a th:href="@{'/}" class="btn btn-info"><i class="fa-solid fa-square-pen"></i></a>
+                                    <button th:onclick="/" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div th:replace="base :: footer" ></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

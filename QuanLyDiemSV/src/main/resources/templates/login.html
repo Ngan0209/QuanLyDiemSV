@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      mlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <main >
+        <h1 class="text-center text-info" style="margin-top: 130px;">ĐĂNG NHẬP</h1>
+        <div class="login-form-container">
+             <form th:action="@{/login}" method="post" class="login-form">
+                <div class="mb-3 mt-3">
+                    <label for="username" class="form-label">Tên đăng nhập:</label>
+                    <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập..." name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật khẩu:</label>
+                    <input type="password" class="form-control" id="password" placeholder="Mật khẩu..." name="password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="mt-4 p-5 bg-primary text-white rounded">
+            <h1>Chu Lệ Ngân  &copy; 2025</h1>
+            <p>eCommerce Website - Quan Ly Diem Sinh Vien</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
+
+

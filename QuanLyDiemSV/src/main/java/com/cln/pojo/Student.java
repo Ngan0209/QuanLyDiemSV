@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -78,7 +79,7 @@ public class Student implements Serializable {
     @ManyToOne(optional = false)
     private Faculty facultyId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User userId;
 
     public Student() {

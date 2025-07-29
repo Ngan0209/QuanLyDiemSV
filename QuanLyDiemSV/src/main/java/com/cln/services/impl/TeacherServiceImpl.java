@@ -35,6 +35,11 @@ public class TeacherServiceImpl implements TeacherSevice{
     public void addOrUpdateTeacher(Teacher p) {
         this.teacherRepository.addOrUpdateTeacher(p);
     }
+
+    @Override
+    public List<Teacher> getTeachersWithoutUser() {
+        return this.teacherRepository.getTeachersWithoutUser();
+    }
     
     
     

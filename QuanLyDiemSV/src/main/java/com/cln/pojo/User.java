@@ -12,12 +12,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -28,12 +29,14 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+    @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role"),
     @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
-    @NamedQuery(name = "User.findByIsActive", query = "SELECT u FROM User u WHERE u.isActive = :isActive"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
+    @NamedQuery(name = "User.findByIsActive", query = "SELECT u FROM User u WHERE u.isActive = :isActive")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,6 +45,22 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "first_name")
+    private String firstName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "last_name")
+    private String lastName;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(name = "email")
+    private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
@@ -66,16 +85,19 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "is_active")
     private boolean isActive;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 254)
-    @Column(name = "email")
-    private String email;
-    @OneToMany(mappedBy = "userId")
-    private Set<Teacher> teacherSet;
-    @OneToMany(mappedBy = "userId")
-    private Set<Student> studentSet;
+    @OneToOne(mappedBy = "userId")
+    private Teacher teacher;
+    @OneToOne(mappedBy = "userId")
+    private Student student;
+    
+    @Transient
+    private MultipartFile file;
+    
+    @Transient
+    private String confirmPassword;
+    
+    @Transient
+    private String studentCode;
 
     public User() {
     }
@@ -84,14 +106,16 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Long id, String username, String password, String role, String avatar, boolean isActive, String email) {
+    public User(Long id, String firstName, String lastName, String email, String username, String password, String role, String avatar, boolean isActive) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.role = role;
         this.avatar = avatar;
         this.isActive = isActive;
-        this.email = email;
     }
 
     public Long getId() {
@@ -100,6 +124,30 @@ public class User implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -142,28 +190,20 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public String getEmail() {
-        return email;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
-    public Set<Teacher> getTeacherSet() {
-        return teacherSet;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setTeacherSet(Set<Teacher> teacherSet) {
-        this.teacherSet = teacherSet;
-    }
-
-    public Set<Student> getStudentSet() {
-        return studentSet;
-    }
-
-    public void setStudentSet(Set<Student> studentSet) {
-        this.studentSet = studentSet;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Override
@@ -189,6 +229,48 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.cln.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the confirmPassword
+     */
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    /**
+     * @param confirmPassword the confirmPassword to set
+     */
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    /**
+     * @return the studentCode
+     */
+    public String getStudentCode() {
+        return studentCode;
+    }
+
+    /**
+     * @param studentCode the studentCode to set
+     */
+    public void setStudentCode(String studentCode) {
+        this.studentCode = studentCode;
     }
     
 }

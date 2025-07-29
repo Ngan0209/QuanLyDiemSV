@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      mlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+    <main >
+        <h1 class="text-center text-info" style="margin-top: 130px;">ĐĂNG KÝ</h1>
+        <div class="login-form-container">
+            <form th:action="@{/register}" method="post" th:object="${user}" class="login-form" enctype="multipart/form-data">
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="lastname" placeholder="Last name" th:field="*{lastName}" required />
+                    <label for="lastname">Last name</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="firstname" placeholder="Fist name" th:field="*{firstName}" required />
+                    <label for="firstname">First name</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="email" class="form-control" id="email" placeholder="email" th:field="*{email}" required />
+                    <label for="email">email</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="studentCode" placeholder="Student code" th:field="*{studentCode}" required />
+                    <label for="studentCode">MSSV</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" th:field="*{username}" required />
+                    <label for="username">Tên đăng nhập</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="password" class="form-control" id="password" placeholder="Mật khẩu" th:field="*{password}" required />
+                    <label for="password">Mật khẩu</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="password" class="form-control" id="confirmpassword" placeholder="Xác nhận mật khẩu" th:field="*{confirmPassword}" required />
+                    <label for="confirmpassword">Xác nhận mật khẩu</label>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input type="file" class="form-control" id="avatar" placeholder="avatar" th:field="*{file}" required />
+                    <label for="avatar">Avatar</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="mt-4 p-5 bg-primary text-white rounded">
+            <h1>Chu Lệ Ngân  &copy; 2025</h1>
+            <p>eCommerce Website - Quan Ly Diem Sinh Vien</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
+
+
+

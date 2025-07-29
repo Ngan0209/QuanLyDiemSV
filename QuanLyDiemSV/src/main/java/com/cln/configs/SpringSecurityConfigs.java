@@ -33,9 +33,9 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @EnableWebSecurity
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-    "com.dht.controllers",
-    "com.dht.repositories",
-    "com.dht.services"
+    "com.cln.controllers",
+    "com.cln.repositories",
+    "com.cln.services"
 })
 public class SpringSecurityConfigs {
 
@@ -52,11 +52,10 @@ public class SpringSecurityConfigs {
             Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
-                -> requests.requestMatchers("/", "/home").authenticated()
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,
-                                "/products/**").hasAnyRole("USER", "ADMIN")
+                -> requests.requestMatchers("/").authenticated()
+                        .requestMatchers("/css/**", "/js/**", "/image/**").permitAll()
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
                 .loginProcessingUrl("/login")
@@ -71,7 +70,16 @@ public class SpringSecurityConfigs {
         return new HandlerMappingIntrospector();
     }
 
-//      
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dauhkaecb",
+                        "api_key", "848373387842926",
+                        "api_secret", "fdfMgzXtAQNCVPjIryuihRtjVBM",
+                        "secure", true));
+        return cloudinary;
+    }
 
     @Bean
     @Order(0)
