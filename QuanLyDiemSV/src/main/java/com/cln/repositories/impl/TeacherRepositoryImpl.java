@@ -58,7 +58,7 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     }
 
     @Override
-    public Teacher getTeacherById(int id) {
+    public Teacher getTeacherById(long id) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
         return s.get(Teacher.class, id);
 

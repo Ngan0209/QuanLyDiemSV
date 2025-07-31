@@ -30,7 +30,7 @@ public class HomeController {
     @Autowired
     private StatService statService;
     
-    @GetMapping("/")
+    @GetMapping("/admin")
     public String index(Model model){
         model.addAttribute("countStudent", this.statService.countStudents());
         model.addAttribute("countFaculty", this.statService.countFaculties());

@@ -55,11 +55,6 @@
                                 <!-- Trình độ giáo viên -->
                                 <td th:if="${s.teacher != null}" th:text="${s.teacher.education}"></td>
                                 <td th:unless="${s.teacher != null}"></td>
-                                <!--                                <td th:if="${s.student != null}" th:text="${s.student.name}"></td>
-                                                                <td th:if="${s.student != null}" th:text="${s.student.studentCode}""></td>
-                                                                <td th:if="${s.teacher != null}" th:text="${s.teacher.name}"></td>
-                                                                <td th:if="${s.teacher != null}" th:text="${s.teacher.education}"}"></td>-->
-
                                 <td>
                                     <a th:href="@{'/}" class="btn btn-info"><i class="fa-solid fa-square-pen"></i></a>
                                     <button th:onclick="/" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>

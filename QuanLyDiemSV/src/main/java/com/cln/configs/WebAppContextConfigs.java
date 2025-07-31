@@ -4,11 +4,13 @@
  */
 package com.cln.configs;
 
+import com.cln.formatters.TeacherFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -49,6 +51,8 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
         return new StandardServletMultipartResolver();
     }
     
+    
+    
 //    @Bean
 //    public LocalValidatorFactoryBean vlidator(){
 //        LocalValidatorFactoryBean v = new LocalValidatorFactoryBean();
@@ -63,4 +67,9 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
 //        
 //        return source;
 //    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new TeacherFormatter());
+    }
 }

@@ -27,7 +27,7 @@ public class TeacherServiceImpl implements TeacherSevice{
     }
 
     @Override
-    public Teacher getTeacherById(int id) {
+    public Teacher getTeacherById(long id) {
         return this.teacherRepository.getTeacherById(id);
     }
 

@@ -18,7 +18,7 @@
                     </div>
 
                     <div>
-                        <form th:action="@{'/grade/classes/' + ${classId} + '/add-column'}" method="post">
+                        <form th:action="@{'/admin/grade/classes/' + ${classId} + '/add-column'}" method="post">
 
                             <div class="form-floating mb-3 mt-3">
                                 <input type="text" class="form-control" id="columnName" name="columnName" placeholder="Ví dụ: Chuyên cần" required />
@@ -27,7 +27,7 @@
 
                             <div class="form-floating mb-3 mt-3">
                                 <button type="submit" class="btn btn-primary">Lưu</button>
-                                <a th:href="@{'/grade/classes/' + ${classId} + '/students'}" class="btn btn-secondary ms-2">Hủy</a>
+                                <a th:href="@{'/admin/grade/classes/' + ${classId} + '/students'}" class="btn btn-secondary ms-2">Hủy</a>
                             </div>
                         </form>
 

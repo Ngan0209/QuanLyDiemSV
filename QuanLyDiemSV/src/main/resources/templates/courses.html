@@ -19,10 +19,10 @@
 
                     <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
                         <!-- Nút bên trái -->
-                        <a th:href="@{/courses/addorupdate}" class="btn btn-success">Thêm môn học</a>
+                        <a th:href="@{/admin/courses/addorupdate}" class="btn btn-success">Thêm môn học</a>
 
                         <!-- Form tìm kiếm bên phải -->
-                        <form th:action="@{/courses}" class="d-flex">
+                        <form th:action="@{/admin/courses}" class="d-flex">
                             <input type="text" class="form-control me-2" placeholder="Nhập tên môn học" name="kw">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -39,17 +39,10 @@
                                 <th></th>
                             </tr>
                             <tr th:each="c: ${courses}">
-                                <!--        <td>
-                                            <img th:src="${p.image}" width="200" class="rounded" />
-                                        </td>-->
-
                                 <td th:text="${c.id}"></td>
                                 <td th:text="${c.name}"></td>
                                 <td th:text="${c.creditHours} + ' tín chỉ'"></td>
-                                <!--        <td>
-                                            <a th:href="@{'/products/' + ${p.id}}"  class="btn btn-info">Cập nhật</a>
-                                            <button th:onclick="'deleteProduct(\'' + @{/api/products/} + ${p.id} + '\')'" class="btn btn-danger">Xóa</button>
-                                        </td>-->
+                                
                                 <td>
 
                                     <a class="btn btn-info" data-bs-toggle="modal"
@@ -57,7 +50,7 @@
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
 
-                                    <a th:href="@{'/courses/addorupdate/' + ${c.id}}" class="btn btn-info"><i class="fa-solid fa-square-pen"></i></a>
+                                    <a th:href="@{'/admin/courses/addorupdate/' + ${c.id}}" class="btn btn-info"><i class="fa-solid fa-square-pen"></i></a>
                                     <button th:onclick="/" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                 </td>
                             <div class="modal fade" th:id="'courseDetail' + ${c.id}" tabindex="-1" aria-hidden="true">

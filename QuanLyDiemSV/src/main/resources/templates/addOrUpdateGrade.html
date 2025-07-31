@@ -17,12 +17,12 @@
                         <h2>Nhập điểm</h2>
                     </div>
                     <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
-                        <a th:href="@{'/grade/classes/' + ${classId} + '/add-column'}"
+                        <a th:href="@{'/admin/grade/classes/' + ${classId} + '/add-column'}"
                            class="btn btn-danger ms-auto">Thêm cột điểm</a>                    
                     </div>
 
                     <div>
-                        <form th:action="@{'/grade/classes/' + ${classId} + '/students/add'}" method="post" th:object="${grades}">
+                        <form th:action="@{'/admin/grade/classes/' + ${classId} + '/students/add'}" method="post" th:object="${grades}">
 
                             <table class="table">
                                 <thead>

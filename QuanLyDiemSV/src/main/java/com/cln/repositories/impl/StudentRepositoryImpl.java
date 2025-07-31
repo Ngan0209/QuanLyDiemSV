@@ -92,8 +92,9 @@ public class StudentRepositoryImpl implements StudentRepository {
 
         // userId là field kiểu User, kiểm tra null
         query.select(root).where(cb.isNull(root.get("userId")));query.select(root).where(cb.and(byCode, noUser));
-
-        return session.createQuery(query).getSingleResult();
+        
+        List<Student> results = session.createQuery(query).getResultList();
+        return results.isEmpty() ? null : results.get(0);
     }
 
 }

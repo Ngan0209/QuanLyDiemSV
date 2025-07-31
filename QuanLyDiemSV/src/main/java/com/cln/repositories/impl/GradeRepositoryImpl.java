@@ -71,13 +71,13 @@ public class GradeRepositoryImpl implements GradeRepository {
         q.where(predicates.toArray(Predicate[]::new));
         List<StudentClass> results = s.createQuery(q).getResultList();
 
-        // Khởi tạo Grade cho các StudentClass chưa có điểm
+        // Khởi tạo Grade cho StudentClass
         for (StudentClass sc : results) {
             if (sc.getGrade() == null) {
                 StudentClass managedSc = s.get(StudentClass.class, sc.getId());
                 Grade g = new Grade();
                 g.setStudentClassId(managedSc);
-                s.persist(g);       // Lưu Grade với liên kết hợp lệ
+                s.persist(g);       
                 managedSc.setGrade(g);
             }
         }

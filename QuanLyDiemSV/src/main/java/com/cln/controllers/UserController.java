@@ -64,18 +64,18 @@ public class UserController {
         return "register";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String listUser() {
         return "users";
     }
 
-    @GetMapping("/users/list")
+    @GetMapping("/admin/users/list")
     public String listUser(Model model, @RequestParam("role") String role) {
         model.addAttribute("users", this.userDetailsService.getUsersByRole(role));
         return "listuser";
     }
 
-    @GetMapping("/users/add")
+    @GetMapping("/admin/users/add")
     public String getUser(Model model) {
         model.addAttribute("user", new User());
         List<Teacher> teachers = this.teacherSevice.getTeachersWithoutUser();
@@ -83,7 +83,7 @@ public class UserController {
         return "addOrUpdateUser";
     }
 
-    @PostMapping("/users/add")
+    @PostMapping("/admin/users/add")
     public String addUser(Model model, @ModelAttribute(value = "user") User u) {
         String errMsg = "";
         if (u.getPassword().equals(u.getConfirmPassword())) {
@@ -97,6 +97,6 @@ public class UserController {
         }
        
         model.addAttribute("errMsg", errMsg);
-        return "users/add";
+        return "redirect:/admin/users/add";
     }
 }

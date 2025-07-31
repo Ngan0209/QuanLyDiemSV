@@ -60,15 +60,15 @@
     </div>
     <div th:fragment="sidebar">
         <div class="w3-sidebar w3-bar-block w3-light-grey w3-card " style="width:230px; margin-top: 103px;">
-            <a th:href="@{/}" class="w3-bar-item w3-button"><i class="fa-solid fa-house"></i> Trang chủ</a>
-            <a th:href="@{/users}" class="w3-bar-item w3-button"><i class="fa-solid fa-user"></i> Quản lý tài khoản</a>
-            <a th:href="@{/faculties}" class="w3-bar-item w3-button"><i class="fa-solid fa-building-columns"></i> khoa</a>
-            <a th:href="@{/classes/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-school-flag"></i> Lớp học</a>
-            <a th:href="@{/students}" class="w3-bar-item w3-button"><i class="fa-solid fa-graduation-cap"></i> Quản lý sinh viên</a>
-            <a th:href="@{/teachers}" class="w3-bar-item w3-button"><i class="fa-solid fa-folder-open"></i> Quản lý giảng viên</a>
-            <a th:href="@{/courses}" class="w3-bar-item w3-button"><i class="fa-solid fa-bookmark"></i> Quản lý môn học</a>
-            <a th:href="@{/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-calendar"></i> Quản lý học kì</a>
-            <a th:href="@{/grade/classes/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-marker"></i> Quản lý điểm Sinh viên</a>
+            <a th:href="@{/admin}" class="w3-bar-item w3-button"><i class="fa-solid fa-house"></i> Trang chủ</a>
+            <a th:href="@{/admin/users}" class="w3-bar-item w3-button"><i class="fa-solid fa-user"></i> Quản lý tài khoản</a>
+            <a th:href="@{/admin/faculties}" class="w3-bar-item w3-button"><i class="fa-solid fa-building-columns"></i> khoa</a>
+            <a th:href="@{/admin/classes/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-school-flag"></i> Lớp học</a>
+            <a th:href="@{/admin/students}" class="w3-bar-item w3-button"><i class="fa-solid fa-graduation-cap"></i> Quản lý sinh viên</a>
+            <a th:href="@{/admin/teachers}" class="w3-bar-item w3-button"><i class="fa-solid fa-folder-open"></i> Quản lý giảng viên</a>
+            <a th:href="@{/admin/courses}" class="w3-bar-item w3-button"><i class="fa-solid fa-bookmark"></i> Quản lý môn học</a>
+            <a th:href="@{/admin/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-calendar"></i> Quản lý học kì</a>
+            <a th:href="@{/admin/grade/classes/semesters}" class="w3-bar-item w3-button"><i class="fa-solid fa-marker"></i> Quản lý điểm Sinh viên</a>
             <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"><i class="fa-solid fa-chart-simple"></i>
                 Thống kê <i class="fa fa-caret-down"></i>
             </button>

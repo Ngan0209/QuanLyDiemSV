@@ -19,7 +19,7 @@
                     </div>
 
                     <div>
-                        <form th:action="@{/users/add}" method="post" th:object="${user}" enctype="multipart/form-data">
+                        <form th:action="@{/admin/users/add}" method="post" th:object="${user}" enctype="multipart/form-data">
                             <div class="form-floating mb-3 mt-3">
                                 <select class="form-select pt-4" id="teacher" th:field="*{teacher}" required>
                                     <option value="" disabled selected>-- Chọn giảng viên --</option>

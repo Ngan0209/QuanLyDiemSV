@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author LE NGAN
  */
 @Controller
+@RequestMapping("/admin")
 public class TeacherController {
     @Autowired
     private TeacherSevice teacherSevice;
@@ -49,7 +51,7 @@ public class TeacherController {
     @PostMapping("/teachers/addorupdate")
     public String addTeacher(@ModelAttribute(value = "teacher") Teacher p) {
         this.teacherSevice.addOrUpdateTeacher(p);
-        return "redirect:/teachers";
+        return "redirect:/admin/teachers";
     }
 
     @GetMapping("/teachers/addorupdate/{teacherId}")

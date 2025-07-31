@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author LE NGAN
  */
 @Controller
+@RequestMapping("/admin")
 public class ClassController {
 
     @Autowired
@@ -45,7 +47,7 @@ public class ClassController {
         return "classes";
     }
 
-    @GetMapping(value = "/classes/{classId}/students", params = {"!action","!mode"})
+    @GetMapping("/classes/{classId}/students")
     public String listStudentsByClass(Model model, @PathVariable("classId") int classId, @RequestParam Map<String, String> params) {
         model.addAttribute("students", this.classService.getStudentByClassId(classId, params));
         model.addAttribute("class", this.classService.getClassById(classId));

@@ -18,20 +18,20 @@
                     </div> 
                     <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
                         <!-- Nút bên trái -->
-                        <a th:href="@{/users/add}" class="btn btn-success">Thêm tài khoản</a>
+                        <a th:href="@{/admin/users/add}" class="btn btn-success">Thêm tài khoản</a>
                     </div>
                     <div class="dashboard">
                         <div class="card orange">
                             <div class="number"></div>
                             <div class="title">Sinh viên</div>
                             <div class="icon">👤</div>
-                            <a th:href="@{/users/list(role='ROLE_STUDENT')}" class="link">Danh sách ➤</a>
+                            <a th:href="@{/admin/users/list(role='ROLE_STUDENT')}" class="link">Danh sách ➤</a>
                         </div>
                         <div class="card orange">
                             <div class="number"></div>
                             <div class="title">Giảng viên</div>
                             <div class="icon">👨‍🏫</div>
-                            <a th:href="@{/users/list(role='ROLE_TEACHER')}" class="link">Danh sách ➤</a>
+                            <a th:href="@{/admin/users/list(role='ROLE_TEACHER')}" class="link">Danh sách ➤</a>
                         </div>
                     </div>
                 </div>

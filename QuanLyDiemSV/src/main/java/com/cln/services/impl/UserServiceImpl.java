@@ -5,9 +5,11 @@
 package com.cln.services.impl;
 
 import com.cln.pojo.Student;
+import com.cln.pojo.Teacher;
 import com.cln.pojo.User;
 import com.cln.repositories.UserRepository;
 import com.cln.services.StudentService;
+import com.cln.services.TeacherSevice;
 import com.cln.services.UserService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -35,9 +37,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private TeacherSevice teacherService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -48,16 +53,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerUser(User user) {
         Student s = studentService.getStudentsWithoutUser(user.getStudentCode());
-        if(s==null)
+        if (s == null) {
             return false;
-        
-        user.setStudent(s); 
-        s.setUserId(user);
-        
-        
-        String pass = user.getPassword();
-        user.setPassword(this.passwordEncoder.encode(pass));
-        user.setRole("ROLE_STUDENT");
+        }
 
         if (!user.getFile().isEmpty()) {
             try {
@@ -67,10 +65,22 @@ public class UserServiceImpl implements UserService {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
+        String pass = user.getPassword();
+        user.setPassword(this.passwordEncoder.encode(pass));
+        user.setRole("ROLE_STUDENT");
+
+        user.setStudent(s);
+        s.setUserId(user);
+
+        boolean result = this.userRepository.registerUser(user);
+        if (!result) {
+            return false;
+        }
+
         studentService.addOrUpdateStudent(s);
 
-        return this.userRepository.registerUser(user);
+        return true;
     }
 
     @Override
@@ -101,6 +111,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(User user) {
+        Long teacherId = user.getTeacher().getId();
+        Teacher t = this.teacherService.getTeacherById(teacherId);
+
         String pass = user.getPassword();
         user.setPassword(this.passwordEncoder.encode(pass));
         user.setRole("ROLE_TEACHER");
@@ -114,7 +127,14 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return this.userRepository.registerUser(user);
+        boolean success = this.userRepository.registerUser(user);
+
+        if (success) {
+            t.setUserId(user); 
+            teacherService.addOrUpdateTeacher(t); 
+        }
+
+        return success;
     }
 
 }

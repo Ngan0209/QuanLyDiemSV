@@ -70,30 +70,10 @@ public class TypeGradeRepositoryImpl implements TypeGradeRepository {
                 while (iterator.hasNext()) {
                     Typegrade t = iterator.next();
                     if (t.getName().equals(nameTypeGrade)) {
-                        iterator.remove();  // Xóa khỏi list
-                        //s.remove(t);        // Xóa khỏi session Hibernate
+                        iterator.remove(); 
                     }
                 }
             }
         }
-//
-//                // Duyệt và xóa những TypeGrade có name trùng khớp
-//                Iterator<Typegrade> iterator = typeGrades.iterator();
-//                boolean removed = false;
-//
-//                while (iterator.hasNext()) {
-//                    Typegrade tg = iterator.next();
-//
-//                    if (nameTypeGrade.trim().equalsIgnoreCase(tg.getName().trim())) {
-//                        tg.setGrade(null); // Hủy liên kết nếu có mappedBy
-//                        iterator.remove(); // Xóa khỏi list
-//                        removed = true;
-//                    }
-//                }
-//
-//                if (removed) {
-//                    gradeRepository.addOrUpdateGrade(grade); // Lưu thay đổi
-//                }
-//            }
     }
 }

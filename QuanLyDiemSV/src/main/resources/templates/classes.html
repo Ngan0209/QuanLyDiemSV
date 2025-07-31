@@ -19,7 +19,7 @@
 
                     <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
                         <th:block th:if="${action == 'class'}">
-                            <a th:href="@{/}" class="btn btn-success">Thêm sinh viên</a>
+                            <a th:href="@{/}" class="btn btn-success">Thêm lớp học</a>
                         </th:block>
                         <th:block th:if="${action == 'grade'}">
                             <span></span>
@@ -27,7 +27,7 @@
 
                         <!-- Form tìm kiếm bên phải -->
                         <th:block th:if="${action == 'class'}">
-                            <form th:action="@{'/classes/semesters/' + ${semesterId}}" method="get" class="d-flex">
+                            <form th:action="@{'/admin/classes/semesters/' + ${semesterId}}" method="get" class="d-flex">
                                 <div>
                                     <div class="d-flex">
                                         <input type="text" class="form-control me-2" placeholder="Nhập tên lớp hoặc môn" name="kwClass"/>
@@ -39,7 +39,7 @@
                             </form>
                         </th:block>
                         <th:block th:if="${action == 'grade'}">
-                            <form th:action="@{'/grade/classes/semesters/' + ${semesterId}}" method="get" class="d-flex">
+                            <form th:action="@{'/admin/grade/classes/semesters/' + ${semesterId}}" method="get" class="d-flex">
                                 <div>
                                     <div class="d-flex">
                                         <input type="text" class="form-control me-2" placeholder="Nhập tên lớp hoặc môn" name="kwClass"/>
@@ -70,10 +70,10 @@
                                 <td th:text="${s.teacherId.name}"></td>
                                 <td>
                             <th:block th:if="${action == 'class'}">
-                                <a th:href="@{'/classes/' + ${s.id} + '/students'}" class="btn btn-info"><i class="fa-solid fa-users"></i></i></a>
+                                <a th:href="@{'/admin/classes/' + ${s.id} + '/students'}" class="btn btn-info"><i class="fa-solid fa-users"></i></i></a>
                             </th:block>
                             <th:block th:if="${action == 'grade'}">
-                                <a th:href="@{'/grade/classes/' + ${s.id} + '/students'}" class="btn btn-info"><i class="fa-solid fa-users"></i></i></a>
+                                <a th:href="@{'/admin/grade/classes/' + ${s.id} + '/students'}" class="btn btn-info"><i class="fa-solid fa-users"></i></i></a>
 
                             </th:block>
                             <a th:href="@{/}" class="btn btn-info"><i class="fa-solid fa-square-pen"></i></a>

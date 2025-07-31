@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface TeacherSevice {
     List<Teacher> getTeachers(Map<String, String> params);
-    Teacher getTeacherById(int id);
+    Teacher getTeacherById(long id);
     void addOrUpdateTeacher(Teacher p);
     List<Teacher> getTeachersWithoutUser();
 }

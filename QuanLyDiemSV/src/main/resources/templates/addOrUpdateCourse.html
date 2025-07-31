@@ -18,7 +18,7 @@
                     </div>
 
                     <div>
-                        <form th:action="@{/courses/addorupdate}" method="post" th:object="${course}">
+                        <form th:action="@{/admin/courses/addorupdate}" method="post" th:object="${course}">
 
                             <div class="form-floating mb-3 mt-3">
                                 <input type="text" class="form-control" id="name" placeholder="Tên môn học" th:field="*{name}" required />

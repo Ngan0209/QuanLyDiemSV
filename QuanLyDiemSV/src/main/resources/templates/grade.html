@@ -18,9 +18,9 @@
                     </div>
 
                     <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
-                        <a th:href="@{'/grade/classes/'+ ${classId} + '/students/add'}" class="btn btn-danger"> Nhập điểm</a>
+                        <a th:href="@{'/admin/grade/classes/'+ ${classId} + '/students/add'}" class="btn btn-danger"> Nhập điểm</a>
                         <!-- Form tìm kiếm bên phải -->
-                        <form th:action="@{'/grade/classes/' + ${classId} + '/students'}" method="get" class="d-flex">
+                        <form th:action="@{'/admin/grade/classes/' + ${classId} + '/students'}" method="get" class="d-flex">
                             <div>
                                 <div class="d-flex">
                                     <input type="text" class="form-control me-2" placeholder="Nhập tên hoặc mssv" name="kwStudent"/>

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author LE NGAN
  */
 @Controller
+@RequestMapping("/admin")
 public class StudentController {
 
     @Autowired
@@ -64,7 +66,7 @@ public class StudentController {
     @PostMapping("/students/addorupdate")
     public String addStudent(@ModelAttribute(value = "student") Student p) {
         this.studentService.addOrUpdateStudent(p);
-        return "redirect:/students";
+        return "redirect:/admin/students";
     }
 
     @GetMapping("/students/addorupdate/{studentId}")

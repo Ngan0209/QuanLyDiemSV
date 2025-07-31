@@ -13,16 +13,17 @@ import org.springframework.format.Formatter;
  *
  * @author LE NGAN
  */
-public class teacherFormatter implements Formatter<Teacher>{
+public class TeacherFormatter implements Formatter<Teacher>{
 
     @Override
-    public String print(Teacher object, Locale locale) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String print(Teacher t, Locale locale) {
+        return String.valueOf(t.getId());
     }
 
     @Override
-    public Teacher parse(String text, Locale locale) throws ParseException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Teacher parse(String teacherId, Locale locale) throws ParseException {
+        Teacher t = new Teacher(Long.valueOf(teacherId));
+        return t;
     }
     
 }
