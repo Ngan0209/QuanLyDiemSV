@@ -87,11 +87,10 @@ public class StudentRepositoryImpl implements StudentRepository {
         CriteriaQuery<Student> query = cb.createQuery(Student.class);
         Root<Student> root = query.from(Student.class);
 
-        Predicate byCode = cb.equal(root.get("studentCode"), studentCode);
+        Predicate byCode = cb.equal(cb.trim(root.get("studentCode")), studentCode.trim());
         Predicate noUser = cb.isNull(root.get("userId"));
 
-        // userId là field kiểu User, kiểm tra null
-        query.select(root).where(cb.isNull(root.get("userId")));query.select(root).where(cb.and(byCode, noUser));
+        query.select(root).where(cb.and(byCode, noUser));
         
         List<Student> results = session.createQuery(query).getResultList();
         return results.isEmpty() ? null : results.get(0);

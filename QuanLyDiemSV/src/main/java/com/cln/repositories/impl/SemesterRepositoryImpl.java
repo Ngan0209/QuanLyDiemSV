@@ -29,6 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SemesterRepositoryImpl implements SemesterRepository {
 
+    private static final int PAGE_SIZE = 3;
+    
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
@@ -55,6 +57,15 @@ public class SemesterRepositoryImpl implements SemesterRepository {
         }
 
         Query query = s.createQuery(q);
+        
+        if (params != null && params.containsKey("page")) {
+            int page = Integer.parseInt(params.get("page"));
+            int start = (page - 1) * PAGE_SIZE;
+
+            query.setMaxResults(PAGE_SIZE);
+            query.setFirstResult(start);
+        }
+               
         return query.getResultList();
     }
 
@@ -97,6 +108,8 @@ public class SemesterRepositoryImpl implements SemesterRepository {
             q.where(predicates.toArray(Predicate[]::new));
         }
         Query query = s.createQuery(q);
+        
+        
         return query.getResultList();
     }
 

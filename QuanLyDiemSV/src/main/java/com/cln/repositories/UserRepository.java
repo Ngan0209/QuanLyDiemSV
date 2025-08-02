@@ -14,5 +14,8 @@ import java.util.List;
 public interface UserRepository {
     boolean registerUser(User user);
     List<User> getUser(String usename);
+    User getUserByUsername(String username);
     List<User> getUsersByRole(String role);
+    boolean authenticate(String username, String password);
+    User studentRegister(User user);
 }

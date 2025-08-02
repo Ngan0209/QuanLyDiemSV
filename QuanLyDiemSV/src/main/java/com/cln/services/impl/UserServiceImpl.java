@@ -27,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -130,11 +131,58 @@ public class UserServiceImpl implements UserService {
         boolean success = this.userRepository.registerUser(user);
 
         if (success) {
-            t.setUserId(user); 
-            teacherService.addOrUpdateTeacher(t); 
+            t.setUserId(user);
+            teacherService.addOrUpdateTeacher(t);
         }
 
         return success;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return this.userRepository.getUserByUsername(username);
+    }
+
+    @Override
+    public boolean authenticate(String username, String password) {
+        return this.userRepository.authenticate(username, password);
+    }
+
+    @Override
+    public User studentRegister(Map<String, String> params, MultipartFile avatar) {
+        User u = new User();
+        u.setFirstName(params.get("firstName"));
+        u.setLastName(params.get("lastName"));
+        u.setEmail(params.get("email"));
+        u.setUsername(params.get("username"));
+        u.setStudentCode(params.get("studentCode"));
+        u.setPassword(this.passwordEncoder.encode(params.get("password")));
+        u.setRole("ROLE_STUDENT");
+
+        if (!avatar.isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                u.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        Student s = studentService.getStudentsWithoutUser(u.getStudentCode());
+
+        if (s == null) {
+            throw new RuntimeException("Student code không hợp lệ hoặc đã có tài khoản!");
+        }
+
+        // Gán user cho student
+        s.setUserId(u);
+        u.setStudent(s);
+
+        u = this.userRepository.studentRegister(u);
+        
+        studentService.addOrUpdateStudent(s);
+        
+        return u;
     }
 
 }

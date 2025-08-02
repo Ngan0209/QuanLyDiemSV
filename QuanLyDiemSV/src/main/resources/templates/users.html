@@ -18,7 +18,8 @@
                     </div> 
                     <div class="mt-2 mb-2 d-flex justify-content-between align-items-center">
                         <!-- Nút bên trái -->
-                        <a th:href="@{/admin/users/add}" class="btn btn-success">Thêm tài khoản</a>
+                        <a th:href="@{/admin/register}" class="btn btn-success">Thêm tài khoản Sinh viên</a>
+                        <a th:href="@{/admin/users/add}" class="btn btn-success">Thêm tài khoản Giảng viên</a>
                     </div>
                     <div class="dashboard">
                         <div class="card orange">
@@ -26,6 +27,7 @@
                             <div class="title">Sinh viên</div>
                             <div class="icon">👤</div>
                             <a th:href="@{/admin/users/list(role='ROLE_STUDENT')}" class="link">Danh sách ➤</a>
+                            
                         </div>
                         <div class="card orange">
                             <div class="number"></div>

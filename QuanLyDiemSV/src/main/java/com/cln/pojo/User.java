@@ -4,6 +4,7 @@
  */
 package com.cln.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -88,6 +89,7 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "userId")
     private Teacher teacher;
     @OneToOne(mappedBy = "userId")
+    @JsonIgnore
     private Student student;
     
     @Transient

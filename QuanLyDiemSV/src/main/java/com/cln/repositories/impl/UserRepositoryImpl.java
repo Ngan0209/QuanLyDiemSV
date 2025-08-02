@@ -19,6 +19,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public boolean registerUser(User user) {
@@ -40,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
             s.persist(user);
             return true;
         } catch (HibernateException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
         return false;
     }
@@ -78,6 +81,27 @@ public class UserRepositoryImpl implements UserRepository {
         return query.getResultList();
     }
 
-    
+    @Override
+    public User getUserByUsername(String username) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("User.findByUsername", User.class);
+        q.setParameter("username", username);
+
+        return (User) q.getSingleResult();
+    }
+
+    @Override
+    public boolean authenticate(String username, String password) {
+        User u = this.getUserByUsername(username);
+
+        return this.passwordEncoder.matches(password, u.getPassword());
+    }
+
+    @Override
+    public User studentRegister(User user) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        s.persist(user);
+        return user;
+    }
 
 }

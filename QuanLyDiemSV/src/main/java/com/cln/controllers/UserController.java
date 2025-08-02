@@ -41,18 +41,18 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("admin/register")
     public String listUser(Model model) {
         model.addAttribute("user", new User());
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("admin/register")
     public String registerUser(Model model, @ModelAttribute(value = "user") User u) {
         String errMsg = "";
         if (u.getPassword().equals(u.getConfirmPassword())) {
             if (this.userDetailsService.registerUser(u) == true) {
-                return "redirect:/login";
+                return "redirect:/admin/users";
             } else {
                 errMsg = "Lỗi!!!";
             }
@@ -61,7 +61,7 @@ public class UserController {
         }
 
         model.addAttribute("errMsg", errMsg);
-        return "register";
+        return "/admin/register";
     }
 
     @GetMapping("/admin/users")
@@ -88,7 +88,7 @@ public class UserController {
         String errMsg = "";
         if (u.getPassword().equals(u.getConfirmPassword())) {
             if (this.userDetailsService.addUser(u) == true) {
-                return "redirect:/users";
+                return "redirect:/admin/users";
             } else {
                 errMsg = "Lỗi!!!";
             }

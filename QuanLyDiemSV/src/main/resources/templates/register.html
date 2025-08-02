@@ -8,9 +8,9 @@
 <body>
     <div th:replace="base :: header"></div>
     <main >
-        <h1 class="text-center text-info" style="margin-top: 130px;">ĐĂNG KÝ</h1>
+        <h1 class="text-center text-info" style="margin-top: 130px;">ĐĂNG KÝ TÀI KHOẢN SINH VIÊN</h1>
         <div class="login-form-container">
-            <form th:action="@{/register}" method="post" th:object="${user}" class="login-form" enctype="multipart/form-data">
+            <form th:action="@{/admin/register}" method="post" th:object="${user}" class="login-form" enctype="multipart/form-data">
                 <div class="form-floating mb-3 mt-3">
                     <input type="text" class="form-control" id="lastname" placeholder="Last name" th:field="*{lastName}" required />
                     <label for="lastname">Last name</label>
