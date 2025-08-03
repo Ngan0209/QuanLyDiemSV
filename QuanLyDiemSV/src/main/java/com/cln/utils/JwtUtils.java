@@ -13,6 +13,8 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import java.util.Date;
+import java.util.List;
+import javax.xml.crypto.Data;
 
 /**
  *
@@ -22,11 +24,12 @@ public class JwtUtils {
     private static final String SECRET = "12345678901234567890123456789012"; // 32 ký tự (AES key)
     private static final long EXPIRATION_MS = 86400000; // 1 ngày
 
-    public static String generateToken(String username) throws Exception {
+    public static String generateToken(String username, String role) throws Exception {
         JWSSigner signer = new MACSigner(SECRET);
 
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .subject(username)
+                .claim("role", role)
                 .expirationTime(new Date(System.currentTimeMillis() + EXPIRATION_MS))
                 .issueTime(new Date())
                 .build();
@@ -49,6 +52,19 @@ public class JwtUtils {
             Date expiration = signedJWT.getJWTClaimsSet().getExpirationTime();
             if (expiration.after(new Date())) {
                 return signedJWT.getJWTClaimsSet().getSubject();
+            }
+        }
+        return null;
+    }
+    
+    public static String getRole(String token) throws Exception{
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        JWSVerifier verifier = new MACVerifier(SECRET);
+        
+        if(signedJWT.verify(verifier)){
+            Date expiration = signedJWT.getJWTClaimsSet().getExpirationTime();
+            if(expiration.after(new Date())){
+                return signedJWT.getJWTClaimsSet().getStringClaim("role");
             }
         }
         return null;

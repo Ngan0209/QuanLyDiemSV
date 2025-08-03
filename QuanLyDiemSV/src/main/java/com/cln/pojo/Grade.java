@@ -4,6 +4,12 @@
  */
 package com.cln.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,6 +35,7 @@ import java.util.Set;
  * @author LE NGAN
  */
 @Entity
+
 @Table(name = "grade")
 @NamedQueries({
     @NamedQuery(name = "Grade.findAll", query = "SELECT g FROM Grade g"),
@@ -54,9 +61,11 @@ public class Grade implements Serializable {
     @Column(name = "final_exem")
     private Float finalExem;
     @JoinColumn(name = "student_class_id", referencedColumnName = "id")
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @JsonBackReference
     private StudentClass studentClassId;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "gradeId", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Typegrade> typegradeSet;
     
     @Transient

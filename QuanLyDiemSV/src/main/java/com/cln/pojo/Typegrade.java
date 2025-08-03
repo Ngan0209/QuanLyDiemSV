@@ -4,6 +4,8 @@
  */
 package com.cln.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,6 +50,7 @@ public class Typegrade implements Serializable {
     private Float grade;
     @JoinColumn(name = "grade_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Grade gradeId;
 
     public Typegrade() {

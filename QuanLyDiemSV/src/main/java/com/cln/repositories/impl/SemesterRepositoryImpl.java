@@ -6,10 +6,15 @@ package com.cln.repositories.impl;
 
 import com.cln.pojo.Semester;
 import com.cln.pojo.Class;
+import com.cln.pojo.Grade;
+import com.cln.pojo.Student;
+import com.cln.pojo.StudentClass;
+import com.cln.pojo.User;
 import com.cln.repositories.SemesterRepository;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
@@ -30,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SemesterRepositoryImpl implements SemesterRepository {
 
     private static final int PAGE_SIZE = 3;
-    
+
     @Autowired
     private LocalSessionFactoryBean sessionFactory;
 
@@ -57,7 +62,7 @@ public class SemesterRepositoryImpl implements SemesterRepository {
         }
 
         Query query = s.createQuery(q);
-        
+
         if (params != null && params.containsKey("page")) {
             int page = Integer.parseInt(params.get("page"));
             int start = (page - 1) * PAGE_SIZE;
@@ -65,7 +70,7 @@ public class SemesterRepositoryImpl implements SemesterRepository {
             query.setMaxResults(PAGE_SIZE);
             query.setFirstResult(start);
         }
-               
+
         return query.getResultList();
     }
 
@@ -93,7 +98,7 @@ public class SemesterRepositoryImpl implements SemesterRepository {
         CriteriaQuery<Class> q = b.createQuery(Class.class);
         Root<Class> root = q.from(Class.class);
         q.select(root);
-        
+
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(b.equal(root.get("semesterId").get("id"), semesterId));
@@ -102,15 +107,58 @@ public class SemesterRepositoryImpl implements SemesterRepository {
                 Predicate namePrediacate = b.like(root.get("name"), String.format("%%%s%%", kwClass));
                 Predicate coursePrediacate = b.like(root.get("courseId").get("name"), String.format("%%%s%%", kwClass));
 
-                predicates.add(b.or(namePrediacate,coursePrediacate));
+                predicates.add(b.or(namePrediacate, coursePrediacate));
             }
-            
+
             q.where(predicates.toArray(Predicate[]::new));
         }
         Query query = s.createQuery(q);
-        
-        
+
         return query.getResultList();
+    }
+
+    @Override
+    public List<Class> getClassesBySemesterIdAndUser(Long semesterId, Long userId) {
+        Session s = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Class> query = b.createQuery(Class.class);
+        Root<StudentClass> root = query.from(StudentClass.class);
+
+        //StudentClass -> Student -> User
+        Join<StudentClass, Student> studentJoin = root.join("studentId");
+        Join<Student, User> userJoin = studentJoin.join("userId");
+
+        //StudentClass -> Class -> Semester
+        Join<StudentClass, Class> classJoin = root.join("classId");
+        Join<Class, Semester> semesterJoin = classJoin.join("semesterId");
+
+        //lọc theo userId và semesterId
+        Predicate byUser = b.equal(userJoin.get("id"), userId);
+        Predicate bySemester = b.equal(semesterJoin.get("id"), semesterId);
+
+        query.select(classJoin).where(b.and(byUser, bySemester)).distinct(true);
+
+        return s.createQuery(query).getResultList();
+    }
+
+    @Override
+    public List<Grade> getGradesBySemesterAndUser(Long semesterId, Long userId) {
+        Session s = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder cb = s.getCriteriaBuilder();
+        CriteriaQuery<Grade> q = cb.createQuery(Grade.class);
+        Root<Grade> root = q.from(Grade.class);
+
+        Join<Grade, StudentClass> studentClassJoin = root.join("studentClassId");
+        Join<StudentClass, Student> studentJoin = studentClassJoin.join("studentId");
+        Join<StudentClass, Class> classJoin = studentClassJoin.join("classId");
+        Join<Class, Semester> semesterJoin = classJoin.join("semesterId");
+
+        Predicate p1 = cb.equal(studentJoin.get("userId").get("id"), userId);
+        Predicate p2 = cb.equal(semesterJoin.get("id"), semesterId);
+
+        q.select(root).where(cb.and(p1, p2)).distinct(true);
+
+        return s.createQuery(q).getResultList();
     }
 
 }

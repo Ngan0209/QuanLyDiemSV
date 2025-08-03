@@ -6,6 +6,7 @@ package com.cln.services;
 
 import com.cln.pojo.Semester;
 import com.cln.pojo.Class;
+import com.cln.pojo.Grade;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -19,4 +20,6 @@ public interface SemesterService {
     Semester getSemesterById(int id);
     void addOrUpdateSemester(Semester p);
     List<Class> getClassesBySemesterId(int semesterId, Map<String, String> params);
+    List<Class> getClassesBySemesterIdAndUser(Long semesterId, Long userId);
+    List<Grade> getGradesBySemesterAndUser(Long semesterId, Long userId);
 }

@@ -49,13 +49,13 @@ public class ApiUserController {
 
         if (this.userDetailsService.authenticate(u.getUsername(), u.getPassword())) {
             try {
-                String token = JwtUtils.generateToken(u.getUsername());
+                String token = JwtUtils.generateToken(u.getUsername(), u.getRole());
                 return ResponseEntity.ok().body(Collections.singletonMap("token", token));
             } catch (Exception e) {
                 return ResponseEntity.status(500).body("Lỗi khi tạo JWT");
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sai thông tin đăng nhập");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sai tài khoản hoặc mật khẩu");
     }
 
     @RequestMapping("/secure/profile")

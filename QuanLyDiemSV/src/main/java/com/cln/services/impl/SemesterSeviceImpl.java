@@ -6,6 +6,7 @@ package com.cln.services.impl;
 
 import com.cln.pojo.Semester;
 import com.cln.pojo.Class;
+import com.cln.pojo.Grade;
 import com.cln.repositories.SemesterRepository;
 import com.cln.services.SemesterService;
 import java.util.List;
@@ -40,6 +41,16 @@ public class SemesterSeviceImpl implements SemesterService{
     @Override
     public List<Class> getClassesBySemesterId(int semesterId, Map<String, String> params) {
         return this.semesterRepository.getClassesBySemesterId(semesterId, params);
+    }
+
+    @Override
+    public List<Class> getClassesBySemesterIdAndUser(Long semesterId, Long userId) {
+        return this.semesterRepository.getClassesBySemesterIdAndUser(semesterId, userId);
+    }
+
+    @Override
+    public List<Grade> getGradesBySemesterAndUser(Long semesterId, Long userId) {
+        return this.semesterRepository.getGradesBySemesterAndUser(semesterId, userId);
     }
     
 }
