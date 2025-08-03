@@ -13,8 +13,11 @@ import { useEffect, useReducer } from 'react';
 import { MyUserContext } from './configs/Contexts';
 import cookie from 'react-cookies';
 import { authApis, endpoint } from './configs/Api';
-import SemesterClasses from './components/SemesterClasses';
 import ViewGrades from './components/ViewGrade';
+import StudentClasses from './components/StudentClasses';
+import TeacherClasses from './components/TeacherClasses';
+import ListStudent from './components/Students';
+import DetailStudent from './components/DetailStudent';
 
 function App() {
   let [user, dispatch] = useReducer(MyUserReducer, null);
@@ -56,8 +59,11 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
-              <Route path='/secure/semesters/:semesterId/classes' element={<SemesterClasses />} />
+              <Route path='/secure/student/semesters/:semesterId/classes' element={<StudentClasses />} />
               <Route path='/secure/student/semesters/:semesterId/classes/grades' element={<ViewGrades />}/>
+              <Route path='/secure/teacher/semesters/:semesterId/classes' element={<TeacherClasses />} />
+              <Route path='/secure/teacher/classes/:classId/students' element={<ListStudent />} />
+              <Route path='/secure/teacher/students/:studentId' element={<DetailStudent/>}/>
             </Routes>
           </Container>
 

@@ -52,5 +52,10 @@ public class SemesterSeviceImpl implements SemesterService{
     public List<Grade> getGradesBySemesterAndUser(Long semesterId, Long userId) {
         return this.semesterRepository.getGradesBySemesterAndUser(semesterId, userId);
     }
+
+    @Override
+    public List<Class> getClassesBySemesterIdAndUserTeacher(Long semesterId, Long userId) {
+        return this.semesterRepository.getClassesBySemesterIdAndUserTeacher(semesterId, userId);
+    }
     
 }

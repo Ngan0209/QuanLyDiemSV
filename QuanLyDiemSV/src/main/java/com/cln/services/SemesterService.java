@@ -22,4 +22,5 @@ public interface SemesterService {
     List<Class> getClassesBySemesterId(int semesterId, Map<String, String> params);
     List<Class> getClassesBySemesterIdAndUser(Long semesterId, Long userId);
     List<Grade> getGradesBySemesterAndUser(Long semesterId, Long userId);
+    List<Class> getClassesBySemesterIdAndUserTeacher(Long semesterId, Long userId);
 }

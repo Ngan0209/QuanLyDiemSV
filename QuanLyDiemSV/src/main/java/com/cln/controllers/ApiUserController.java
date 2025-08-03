@@ -9,12 +9,15 @@ import com.cln.services.UserService;
 import com.cln.utils.JwtUtils;
 import java.security.Principal;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,14 +46,18 @@ public class ApiUserController {
             @RequestParam(value = "avatar") MultipartFile avatar) {
         return new ResponseEntity<>(this.userDetailsService.studentRegister(params, avatar), HttpStatus.CREATED);
     }
-    
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User u) {
 
         if (this.userDetailsService.authenticate(u.getUsername(), u.getPassword())) {
             try {
-                String token = JwtUtils.generateToken(u.getUsername(), u.getRole());
-                return ResponseEntity.ok().body(Collections.singletonMap("token", token));
+                User user = this.userDetailsService.getUserByUsername(u.getUsername());
+                String token = JwtUtils.generateToken(user.getUsername(), user.getRole());
+                Map<String, Object> response = new HashMap<>();
+                response.put("token", token);
+                response.put("role", user.getRole());
+                return ResponseEntity.ok().body(response);
             } catch (Exception e) {
                 return ResponseEntity.status(500).body("Lỗi khi tạo JWT");
             }
@@ -62,6 +69,7 @@ public class ApiUserController {
     @ResponseBody
     @CrossOrigin
     public ResponseEntity<User> getProfile(Principal principal) {
+        System.out.println("PRINCIPAL: " + principal);
         return new ResponseEntity<>(this.userDetailsService.getUserByUsername(principal.getName()), HttpStatus.OK);
     }
 }

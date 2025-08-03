@@ -9,6 +9,7 @@ import com.cln.pojo.Class;
 import com.cln.pojo.Grade;
 import com.cln.pojo.Student;
 import com.cln.pojo.StudentClass;
+import com.cln.pojo.Teacher;
 import com.cln.pojo.User;
 import com.cln.repositories.SemesterRepository;
 import jakarta.persistence.Query;
@@ -160,5 +161,25 @@ public class SemesterRepositoryImpl implements SemesterRepository {
 
         return s.createQuery(q).getResultList();
     }
+    
+    @Override
+    public List<Class> getClassesBySemesterIdAndUserTeacher(Long semesterId, Long userId) {
+        Session s = sessionFactory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Class> query = b.createQuery(Class.class);
+        Root<Class> root = query.from(Class.class);
 
+        Join<Class, Teacher> teacherJoin = root.join("teacherId");
+        Join<Teacher, User> userJoin = teacherJoin.join("userId");
+        Join<Class, Semester> semesterJoin = root.join("semesterId");
+       
+        //lọc theo userId và semesterId
+        Predicate byUser = b.equal(userJoin.get("id"), userId);
+        Predicate bySemester = b.equal(semesterJoin.get("id"), semesterId);
+
+        query.select(root).where(b.and(byUser, bySemester)).distinct(true);
+
+        return s.createQuery(query).getResultList();
+    }
+    
 }

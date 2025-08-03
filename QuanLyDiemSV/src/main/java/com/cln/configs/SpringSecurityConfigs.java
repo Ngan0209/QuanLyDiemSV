@@ -4,19 +4,24 @@
  */
 package com.cln.configs;
 
+import com.cln.filters.JwtFilter;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import jakarta.servlet.Filter;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -36,6 +41,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
     "com.cln.repositories",
     "com.cln.services"
 })
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfigs {
 
     @Autowired
@@ -54,14 +60,19 @@ public class SpringSecurityConfigs {
                 -> requests.requestMatchers("/").authenticated()
                         .requestMatchers("/css/**", "/js/**", "/image/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/api/login", "/api/semesters").permitAll()
+                        .requestMatchers("/api/register").hasRole("STUDENT")
+                        .requestMatchers("/api/secure/student/**").hasRole("STUDENT")
+                        .requestMatchers("/api/secure/teacher/**").hasRole("TEACHER")
+//                        .requestMatchers("/api/students/**").permitAll()
                         .anyRequest().authenticated())
+                
                 .formLogin(form -> form.loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/admin", true)
                 .failureUrl("/login?error=true").permitAll())
                 .logout(logout -> logout.logoutSuccessUrl("/login").permitAll());
+        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -92,15 +103,20 @@ public class SpringSecurityConfigs {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:3000/")); 
+        config.setAllowedOrigins(List.of("http://localhost:3000/"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setExposedHeaders(List.of("Authorization"));
-        config.setAllowCredentials(true); 
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
         return source;
+    }
+
+    @Bean
+    public Filter jwtFilter() {
+        return new JwtFilter();
     }
 }

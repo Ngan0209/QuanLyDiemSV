@@ -8,8 +8,12 @@ export const endpoint = {
     'register':'/users',
     'login':'/login',
     'profile': '/secure/profile',
-    'classes': '/secure/semesters/{semesterId}/classes',
-    'grades': '/secure/student/semesters/{semesterId}/classes/grades'
+    'studentclasses': '/secure/student/semesters/{semesterId}/classes',
+    'grades': '/secure/student/semesters/{semesterId}/classes/grades',
+    'teacherclasses': '/secure/teacher/semesters/{semesterId}/classes',
+    'liststudent': '/secure/teacher/classes/{classId}/students',
+    'detailstudent':'/secure/teacher/students/{studentId}'
+
 }
 
 export const buildUrl = (template, params) => {
@@ -20,12 +24,27 @@ export const buildUrl = (template, params) => {
     return url;
 };
 
-export const authApis = () => axios.create({
-    baseURL: BASE_URL,
-    headers: {
-        'Authorization': `Bearer ${cookie.load('token')}`
-    }
-})
+// export const authApis = () => axios.create({
+//     baseURL: BASE_URL,
+//     headers: {
+//         'Authorization': `Bearer ${cookie.load('token')}`
+//     },
+   
+// })
+
+export const authApis = () => {
+    const token = cookie.load('token');
+    const role = cookie.load('role');
+    console.info("role:", role);
+    console.info("Token:", token);
+
+    return axios.create({
+        baseURL: BASE_URL,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+}
 
 export default axios.create({
     baseURL: BASE_URL

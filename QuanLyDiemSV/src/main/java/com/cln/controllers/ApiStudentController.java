@@ -4,38 +4,32 @@
  */
 package com.cln.controllers;
 
-import com.cln.services.TypeGradeService;
+import com.cln.services.StudentService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author LE NGAN
  */
-
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class ApiGradeControlller {
-    
+public class ApiStudentController {
     @Autowired
-    private TypeGradeService typeGradeService;
-
-    @DeleteMapping("/grade/classes/{classId}/delete-column")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTypeGradeColumn(@PathVariable("classId") int classId,@RequestParam("name") String name) {
-        this.typeGradeService.deleteTypeGradeColumn(name, classId);
-    }
+    private StudentService studentService;
     
-//    @PostMapping("/classes/{classId}/students/add")
-//    pu
+    @GetMapping("/secure/teacher/students/{studentId}")
+    public ResponseEntity<?> getStudent(
+            @PathVariable("studentId") int studentId) {
+        return new ResponseEntity<>(this.studentService.getStudentById(studentId), HttpStatus.OK);
+    }
 }

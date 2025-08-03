@@ -35,10 +35,13 @@ const Login = () => {
                 ...user
             });
 
-            console.info(res.data);
+            console.info("Login response:", res.data);
+            
             cookie.save('token', res.data.token, { path: '/' });
+            cookie.save('role', res.data.role, { path: '/' });
 
             let u = await authApis().get(endpoint['profile']);
+            // console.info(u.data)
             
             dispatch({
                 "type": "login",

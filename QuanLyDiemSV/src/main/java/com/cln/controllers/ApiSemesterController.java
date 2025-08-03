@@ -45,8 +45,8 @@ public class ApiSemesterController {
         return new ResponseEntity<>(this.semesterService.getSemesters(params), HttpStatus.OK);
     }
 
-    @GetMapping("/secure/semesters/{semesterId}/classes")
-    public ResponseEntity<List<Class>> classes(@PathVariable(value = "semesterId") Long semesterid,
+    @GetMapping("/secure/student/semesters/{semesterId}/classes")
+    public ResponseEntity<List<Class>> studentClasses(@PathVariable(value = "semesterId") Long semesterid,
             HttpServletRequest request) {
         User user = this.userDetailsService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         return new ResponseEntity<>(this.semesterService.getClassesBySemesterIdAndUser(semesterid, user.getId()), HttpStatus.OK);
@@ -66,5 +66,12 @@ public class ApiSemesterController {
             
         });
         return new ResponseEntity<>(grades, HttpStatus.OK);
+    }
+    
+    @GetMapping("/secure/teacher/semesters/{semesterId}/classes")
+    public ResponseEntity<List<Class>> teacherClasses(@PathVariable(value = "semesterId") Long semesterid,
+            HttpServletRequest request) {
+        User user = this.userDetailsService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        return new ResponseEntity<>(this.semesterService.getClassesBySemesterIdAndUserTeacher(semesterid, user.getId()), HttpStatus.OK);
     }
 }

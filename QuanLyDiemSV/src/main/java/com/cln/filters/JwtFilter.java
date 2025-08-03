@@ -4,6 +4,8 @@
  */
 package com.cln.filters;
 
+import com.cln.pojo.User;
+import com.cln.services.UserService;
 import com.cln.utils.JwtUtils;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -14,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author LE NGAN
  */
 public class JwtFilter implements Filter {
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -43,7 +43,7 @@ public class JwtFilter implements Filter {
                     String username = JwtUtils.validateTokenAndGetUsername(token);
                     String role = JwtUtils.getRole(token); // roles từ token
                     List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
-                            
+
                     if (username != null && role != null) {
                         httpRequest.setAttribute("username", username);
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
@@ -63,5 +63,5 @@ public class JwtFilter implements Filter {
 
         chain.doFilter(request, response);
     }
-
+  
 }

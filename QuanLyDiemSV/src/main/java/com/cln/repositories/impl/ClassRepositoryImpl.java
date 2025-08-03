@@ -43,13 +43,7 @@ public class ClassRepositoryImpl implements ClassRepository {
 
         if (params != null) {
             List<Predicate> predcates = new ArrayList<>();
-
-//            String kw = params.get("kw");
-//            if (kw != null && !kw.isEmpty()) {
-//                predcates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
-//            }
             q.where(predcates.toArray(Predicate[]::new));
-
             // Sap xep du lieu
             q.orderBy(b.desc(root.get(params.getOrDefault("sortBy", "id"))));
         }
@@ -82,6 +76,8 @@ public class ClassRepositoryImpl implements ClassRepository {
                 Predicate codePrediacate = b.like(root.get("studentId").get("studentCode"), String.format("%%%s%%", kwStudent));
 
                 predicates.add(b.or(namePrediacate,codePrediacate));
+                
+                q.orderBy(b.desc(root.get(params.getOrDefault("sortBy", "id"))));
             }
             
             q.where(predicates.toArray(Predicate[]::new));
