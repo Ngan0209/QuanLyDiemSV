@@ -12,7 +12,9 @@ export const endpoint = {
     'grades': '/secure/student/semesters/{semesterId}/classes/grades',
     'teacherclasses': '/secure/teacher/semesters/{semesterId}/classes',
     'liststudent': '/secure/teacher/classes/{classId}/students',
-    'detailstudent':'/secure/teacher/students/{studentId}'
+    'detailstudent':'/secure/teacher/students/{studentId}',
+    'delete': 'delete-columnGrade/classes/{classId}',
+    'gradecolumn': '/secure/teacher/classes/{classId}/add-GradeColumn'
 
 }
 

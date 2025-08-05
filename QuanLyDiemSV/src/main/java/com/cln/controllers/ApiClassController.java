@@ -5,8 +5,10 @@
 package com.cln.controllers;
 
 import com.cln.pojo.Student;
+import com.cln.pojo.StudentClass;
 import com.cln.pojo.User;
 import com.cln.services.ClassService;
+import com.cln.services.GradeService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +35,17 @@ public class ApiClassController {
     @Autowired
     private ClassService classService;
     
+    @Autowired
+    private GradeService gradeService;
+    
     @GetMapping("/secure/teacher/classes/{classId}/students")
     public ResponseEntity<?> listStudent(
             @PathVariable("classId") int classid,
             @RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.classService.getStudentByClassId(classid, params), HttpStatus.OK);
+        
+        List<StudentClass> studentClass = this.gradeService.getStudentGradeByClassId(classid, params);
+    this.gradeService.averageScores(studentClass);
+
+    return ResponseEntity.ok(studentClass);
     }
 }

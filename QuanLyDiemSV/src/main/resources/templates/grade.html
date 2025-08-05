@@ -46,7 +46,7 @@
                                 <th th:each="tg : ${grades[0].grade != null && grades[0].grade.typegradeSet != null ? grades[0].grade.typegradeSet : {}}">
                                     <span th:text="${tg.name}"></span>
                                     <button 
-                                       th:onclick="'deleteTypegradeColumn(\'' + @{/api/grade/classes/{id}/delete-column(id=${classId}, name=${tg.name})} + '\')'">
+                                       th:onclick="'deleteTypegradeColumn(\'' + @{/api/delete-columnGrade/classes/{id}(id=${classId}, name=${tg.name})} + '\')'">
                                         <i class="fa-solid fa-circle-xmark text-danger"></i>
                                     </button>
                                 </th>

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { MyUserContext } from "../configs/Contexts";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Api, { authApis, buildUrl, endpoint } from "../configs/Api";
-import { Button, Card } from "react-bootstrap";
+import { authApis, buildUrl, endpoint } from "../configs/Api";
+import { Card } from "react-bootstrap";
 
 const StudentClasses = () => {
     const [classes, setClasses] = useState([]);

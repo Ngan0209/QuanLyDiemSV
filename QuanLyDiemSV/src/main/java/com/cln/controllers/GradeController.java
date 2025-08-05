@@ -68,10 +68,8 @@ public class GradeController {
     public String listStudentsForGrading(Model model,@PathVariable("classId") int classId, @RequestParam Map<String, String> params) {
 
         List<StudentClass> grades = this.gradeService.getStudentGradeByClassId(classId, params);
-        gradeService.averageScores(grades);
-
-        model.addAttribute("students", this.classService.getStudentByClassId(classId, params));
-        model.addAttribute("class", this.classService.getClassById(classId));
+        this.gradeService.averageScores(grades);
+       
         model.addAttribute("grades", grades); 
         model.addAttribute("action", "grade");
 
@@ -80,7 +78,6 @@ public class GradeController {
 
     @GetMapping("/classes/{classId}/students/add")
     public String addGrade(Model model, @PathVariable("classId") int classId, @RequestParam Map<String, String> params) {
-        model.addAttribute("class", this.classService.getClassById(classId));
         model.addAttribute("grades", this.gradeService.getStudentGradeByClassId(classId, params));
         return "addOrUpdateGrade";
     }
