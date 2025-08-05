@@ -29,8 +29,8 @@ public class TypeGradeServiceImpl implements TypeGradeService{
     }
 
     @Override
-    public void addTypeGradeColumn(Typegrade typeGrade) {
-        this.typeGradeRepository.addTypeGradeColumn(typeGrade);
+    public void saveTypeGradeColumn(Typegrade typeGrade) {
+        this.typeGradeRepository.saveTypeGradeColumn(typeGrade);
     }
 
     @Override

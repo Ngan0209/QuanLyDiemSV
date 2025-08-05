@@ -115,7 +115,7 @@ public class GradeRepositoryImpl implements GradeRepository {
             tg.setName(columnName);
             tg.setGradeId(g);
 
-            typeGradeRepository.addTypeGradeColumn(tg);
+            typeGradeRepository.saveTypeGradeColumn(tg);
         }
 
     }
@@ -133,7 +133,7 @@ public class GradeRepositoryImpl implements GradeRepository {
             if (g.getTypegradeSet() != null) {
                 for (Typegrade tg : g.getTypegradeSet()) {
                     tg.setGradeId(g);
-                    typeGradeRepository.addTypeGradeColumn(tg);
+                    typeGradeRepository.saveTypeGradeColumn(tg);
                 }
             }
 

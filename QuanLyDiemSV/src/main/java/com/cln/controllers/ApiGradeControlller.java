@@ -4,8 +4,10 @@
  */
 package com.cln.controllers;
 
+import com.cln.pojo.Grade;
 import com.cln.services.GradeService;
 import com.cln.services.TypeGradeService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,5 +63,12 @@ public class ApiGradeControlller {
         }
     }
 
-//    @GetMapping("/classes/{classId}/students/grade")
+//    @PostMapping("/secure/teacher/classes/{classId}/saveGrade")
+//    public ResponseEntity<?> saveGrade(@PathVariable("classId") int classId,
+//            @RequestBody List<Grade> grades) {
+//        try{
+//            this.gradeService.saveGrades(grades);
+//            return Re
+//        }
+//    }
 }

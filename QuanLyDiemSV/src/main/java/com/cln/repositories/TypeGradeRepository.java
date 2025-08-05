@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface TypeGradeRepository {
     List<Typegrade> listTypeGradeByGradeId(Grade grade);
-    void addTypeGradeColumn(Typegrade typeGrade);
+    void saveTypeGradeColumn(Typegrade typeGrade);
     void deleteTypeGradeColumn(String nameTypeGrade, int classId);
 }

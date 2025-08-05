@@ -86,8 +86,7 @@ public class GradeController {
     public String saveGrade(@PathVariable("classId") int classId,
             @ModelAttribute("grades") GradeListWrapper wrapper) {
         this.gradeService.saveGrades(wrapper.getGrades());
-        return "redirect:/admin/grade/classes/" + classId + "/students";
-
+        return "redirect:/admin/grade/classes/{classId}/students";
     }
 
     @GetMapping("/classes/{classId}/add-column")
@@ -98,13 +97,13 @@ public class GradeController {
     @PostMapping("/classes/{classId}/add-column")
     public String addTypeGradeColumn(@PathVariable("classId") int classId, @RequestParam("columnName") String columnName) {
         this.gradeService.addTypeGradeColumnForClass(classId, columnName);
-        return "redirect:/admin/grade/classes/" + classId + "/students";
+        return "redirect:/admin/grade/classes/{classId}/students";
     }
 
-    @GetMapping("/classes/{classId}/delete-column")
-    public String deleteTypeGradeColumn(@PathVariable("classId") int classId, @RequestParam("name") String name) {
-        this.typeGradeService.deleteTypeGradeColumn(name, classId);
-        return "redirect:/admin/grade/classes/" + classId + "/students";
-    }
+//    @GetMapping("/classes/{classId}/delete-column")
+//    public String deleteTypeGradeColumn(@PathVariable("classId") int classId, @RequestParam("name") String name) {
+//        this.typeGradeService.deleteTypeGradeColumn(name, classId);
+//        return "redirect:/admin/grade/classes/{classId}/students";
+//    }
 
 }

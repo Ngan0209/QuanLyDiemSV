@@ -37,7 +37,6 @@ public class HomeController {
         model.addAttribute("countCourse", this.statService.countCourses());
         model.addAttribute("countClass", this.statService.countClasses());
         model.addAttribute("countTeacher", this.statService.countTeachers());
-        
         model.addAttribute("countStudentBySchoolyear", this.statService.countStudentBySchoolYear());
         model.addAttribute("countTeacherByEducation", this.statService.countTeacherByEducation());
         return "home";

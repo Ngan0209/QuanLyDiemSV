@@ -52,7 +52,7 @@ public class TypeGradeRepositoryImpl implements TypeGradeRepository {
     }
 
     @Override
-    public void addTypeGradeColumn(Typegrade typeGrade) {
+    public void saveTypeGradeColumn(Typegrade typeGrade) {
         Session s = sessionFactory.getObject().getCurrentSession();
         s.merge(typeGrade);
     }
