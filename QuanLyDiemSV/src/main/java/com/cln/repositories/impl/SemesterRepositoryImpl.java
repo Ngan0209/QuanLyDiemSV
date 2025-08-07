@@ -125,15 +125,12 @@ public class SemesterRepositoryImpl implements SemesterRepository {
         CriteriaQuery<Class> query = b.createQuery(Class.class);
         Root<StudentClass> root = query.from(StudentClass.class);
 
-        //StudentClass -> Student -> User
         Join<StudentClass, Student> studentJoin = root.join("studentId");
         Join<Student, User> userJoin = studentJoin.join("userId");
 
-        //StudentClass -> Class -> Semester
         Join<StudentClass, Class> classJoin = root.join("classId");
         Join<Class, Semester> semesterJoin = classJoin.join("semesterId");
 
-        //lọc theo userId và semesterId
         Predicate byUser = b.equal(userJoin.get("id"), userId);
         Predicate bySemester = b.equal(semesterJoin.get("id"), semesterId);
 
@@ -173,7 +170,6 @@ public class SemesterRepositoryImpl implements SemesterRepository {
         Join<Teacher, User> userJoin = teacherJoin.join("userId");
         Join<Class, Semester> semesterJoin = root.join("semesterId");
        
-        //lọc theo userId và semesterId
         Predicate byUser = b.equal(userJoin.get("id"), userId);
         Predicate bySemester = b.equal(semesterJoin.get("id"), semesterId);
 

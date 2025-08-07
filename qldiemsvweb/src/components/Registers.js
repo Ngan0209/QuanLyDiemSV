@@ -42,11 +42,18 @@ const Register = () => {
     const nav = useNavigate();
 
     const validate = () => {
-        if (user.confirm === null || user.password === null || user.confirm !== user.password)
+        if (!user.email || !user.email.endsWith("@ou.edu.vn")) {
+            setMsg("Nhập sai Email của trường!");
+            return false;
+        }
+
+        if (!user.password || !user.confirm || user.password !== user.confirm) {
             setMsg("Mật khẩu KHÔNG khớp!");
+            return false;
+        }
 
         return true;
-    }
+    };
 
     const register = async (event) => {
         event.preventDefault();

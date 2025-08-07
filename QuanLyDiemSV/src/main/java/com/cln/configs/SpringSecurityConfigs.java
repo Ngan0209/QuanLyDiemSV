@@ -62,7 +62,7 @@ public class SpringSecurityConfigs {
                         .requestMatchers("/css/**", "/js/**", "/image/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/login", "/api/semesters").permitAll()
-                        .requestMatchers("/api/register").hasRole("STUDENT")
+                        .requestMatchers("/api/users").permitAll()
                         .requestMatchers("/api/secure/student/**").hasRole("STUDENT")
                         .requestMatchers("/api/secure/teacher/**").hasRole("TEACHER")
                         .requestMatchers(HttpMethod.DELETE,"/api/delete-columnGrade/**").permitAll()

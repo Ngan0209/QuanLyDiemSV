@@ -53,7 +53,7 @@ public class GradeRepositoryImpl implements GradeRepository {
         Root<StudentClass> root = q.from(StudentClass.class);
 
         root.fetch("studentId", JoinType.LEFT);
-        root.fetch("grade", JoinType.LEFT);//lấy hết sinh viên
+        root.fetch("grade", JoinType.LEFT);
 
         q.select(root);
         List<Predicate> predicates = new ArrayList<>();
@@ -71,14 +71,13 @@ public class GradeRepositoryImpl implements GradeRepository {
         q.where(predicates.toArray(Predicate[]::new));
         List<StudentClass> results = s.createQuery(q).getResultList();
 
-        // Khởi tạo Grade cho StudentClass
         for (StudentClass sc : results) {
             if (sc.getGrade() == null) {
-                StudentClass managedSc = s.get(StudentClass.class, sc.getId());
+                StudentClass t = s.get(StudentClass.class, sc.getId());
                 Grade g = new Grade();
-                g.setStudentClassId(managedSc);
+                g.setStudentClassId(t);
                 s.persist(g);       
-                managedSc.setGrade(g);
+                t.setGrade(g);
             }
         }
 
@@ -129,7 +128,6 @@ public class GradeRepositoryImpl implements GradeRepository {
                 g.setStudentClassId(sc);
             }
 
-            // Lưu Typegrade 
             if (g.getTypegradeSet() != null) {
                 for (Typegrade tg : g.getTypegradeSet()) {
                     tg.setGradeId(g);
@@ -137,7 +135,6 @@ public class GradeRepositoryImpl implements GradeRepository {
                 }
             }
 
-            // Lưu Grade
             this.addOrUpdateGrade(g);
         }
     }

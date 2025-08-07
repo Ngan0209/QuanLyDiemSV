@@ -174,7 +174,6 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Student code không hợp lệ hoặc đã có tài khoản!");
         }
 
-        // Gán user cho student
         s.setUserId(u);
         u.setStudent(s);
 

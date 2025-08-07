@@ -81,7 +81,6 @@ public class TeacherRepositoryImpl implements TeacherRepository {
         CriteriaQuery<Teacher> query = cb.createQuery(Teacher.class);
         Root<Teacher> root = query.from(Teacher.class);
 
-        // userId là field kiểu User, kiểm tra null
         query.select(root).where(cb.isNull(root.get("userId")));
 
         return session.createQuery(query).getResultList();

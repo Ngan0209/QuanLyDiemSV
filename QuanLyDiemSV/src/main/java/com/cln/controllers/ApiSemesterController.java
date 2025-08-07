@@ -56,11 +56,9 @@ public class ApiSemesterController {
     public ResponseEntity<List<Grade>> grades(@PathVariable(value = "semesterId") Long semesterid,
             HttpServletRequest request) {
         User user = this.userDetailsService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-//        return new ResponseEntity<>(this.semesterService.getGradesBySemesterAndUser(semesterid, user.getId()), HttpStatus.OK);
         List<Grade> grades = this.semesterService.getGradesBySemesterAndUser(semesterid, user.getId());
         System.out.println("Grade list: " + grades.size());
-        grades.forEach(g -> {
-            
+        grades.forEach(g -> {    
                 System.out.println("Grade ID: " + g.getId());
                 System.out.println("StudentClass ID: " + (g.getStudentClassId() != null ? g.getStudentClassId().getId() : "null"));
             

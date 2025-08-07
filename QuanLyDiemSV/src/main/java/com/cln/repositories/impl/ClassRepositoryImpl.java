@@ -44,7 +44,6 @@ public class ClassRepositoryImpl implements ClassRepository {
         if (params != null) {
             List<Predicate> predcates = new ArrayList<>();
             q.where(predcates.toArray(Predicate[]::new));
-            // Sap xep du lieu
             q.orderBy(b.desc(root.get(params.getOrDefault("sortBy", "id"))));
         }
         Query query = s.createQuery(q);

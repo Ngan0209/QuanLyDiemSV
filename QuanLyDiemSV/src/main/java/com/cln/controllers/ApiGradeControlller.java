@@ -49,28 +49,18 @@ public class ApiGradeControlller {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addTypeGradeColumn(@PathVariable("classId") int classId,
             @RequestBody Map<String, String> params) {
-        try {
+        
             String columnName = params.get("columnName");
             this.gradeService.addTypeGradeColumnForClass(classId, columnName);
-            return ResponseEntity.ok(Map.of(
-                    "message", "Thêm cột điểm thành công!",
-                    "classId", classId
-            ));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of(
-                    "error", e.getMessage()
-            ));
-        }
+            return ResponseEntity.ok("Thêm cột điểm thành công!");
     }
 
     @PostMapping("/secure/teacher/classes/{classId}/saveGrade")
     public ResponseEntity<?> saveGrade(@PathVariable("classId") int classId,
             @RequestBody List<Grade> grades) {
-         try {
+    
             gradeService.saveGrades(grades);
-            return ResponseEntity.ok(Map.of("message", "Lưu điểm thành công"));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-        }
+            return ResponseEntity.ok("Lưu điểm thành công");
+        
     }
 }

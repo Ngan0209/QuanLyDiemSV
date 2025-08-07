@@ -3,6 +3,11 @@ import { MyUserContext } from "../configs/Contexts";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Api, { authApis, buildUrl, endpoint } from "../configs/Api";
 import { Button, Form, Table } from "react-bootstrap";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import "../libs/RobotoFont";
+import { font } from "../libs/RobotoFont";
+
 
 const ListStudent = () => {
     const [studentClasses, setStudentClasses] = useState([]);
@@ -54,6 +59,96 @@ const ListStudent = () => {
         return () => clearTimeout(timer);
     }, [user, classId, q])
 
+    const exportPDF = () => {
+        const doc = new jsPDF();
+        doc.addFileToVFS("Roboto-Regular-normal.ttf", font);
+        doc.addFont("Roboto-Regular-normal.ttf", "Roboto-Regular", "normal");
+        doc.setFont("Roboto-Regular");
+        doc.setFontSize(14);
+        doc.text("Danh sách điểm sinh viên", 14, 16);
+
+        const c = studentClasses[0]?.classId;
+        doc.setFontSize(12);
+        doc.text(`Lớp: ${c.name}`, 14, 26);
+        doc.text(`Môn học: ${c.courseId.name}`, 14, 32);
+        doc.text(`Giảng viên: ${c.teacherId.name}`, 14, 38);
+
+        const headers = ["MSSV", "Ho ten", "Giua ky", "Cuoi ky"];
+        const firstRow = studentClasses[0];
+        const extraColumns = firstRow.grade.typegradeSet?.map(tg => tg.name) || [];
+        headers.push(...extraColumns, "Điem TB");
+
+        const rows = studentClasses.map(c => {
+            const row = [
+                c.studentId.studentCode,
+                c.studentId.name,
+                c.grade.midterm,
+                c.grade.finalExem,
+            ];
+
+            if (c.grade.typegradeSet) {
+                c.grade.typegradeSet.forEach(tg => {
+                    row.push(tg.grade !== null ? tg.grade : "--");
+                });
+            }
+
+            row.push(c.grade.averageScore !== null ? c.grade.averageScore : "--");
+            return row;
+        });
+
+        autoTable(doc, {
+            startY: 44,
+            head: [headers],
+            body: rows,
+        });
+
+        doc.save(`Diem_Lop_${c.name}.pdf`);
+    }
+
+    const exportCSV = () => {
+        const headers = ["MSSV", "Họ tên", "Giữa kỳ", "Cuối kỳ"];
+        const firstRow = studentClasses[0];
+        const extraColumns = firstRow?.grade?.typegradeSet?.map(tg => tg.name) || [];
+        headers.push(...extraColumns, "Điểm TB");
+
+        const c = studentClasses[0].classId;
+
+        const metaInfo = [
+            `Lớp: ${c.name || "--"}`,
+            `Môn học: ${c.courseId.name || "--"}`,
+            `Giảng viên: ${c.teacherId.name || "--"}`,
+            "" 
+        ];
+
+        const rows = studentClasses.map(c => {
+            const row = [
+                c.studentId.studentCode,
+                c.studentId.name,
+                c.grade.midterm,
+                c.grade.finalExem,
+            ];
+
+            if (c.grade.typegradeSet) {
+                c.grade.typegradeSet.forEach(tg => {
+                    row.push(tg.grade !== null ? tg.grade : "--");
+                });
+            }
+
+            row.push(c.grade.averageScore !== null ? c.grade.averageScore : "--");
+            return row.join(",");
+        });
+
+        const csvContent = [...metaInfo, headers.join(","), ...rows].join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Diem_Lop_${c.name}.csv`;
+        a.click();
+    };
+
+
     return (
         <>
             <div className="container mt-5">
@@ -101,9 +196,9 @@ const ListStudent = () => {
                                             : <td key={tg.id}>--</td>
                                     ))
                                 )}
-                                {c.grade.averageScore != null ? 
-                                <td>{c.grade.averageScore}</td> : 
-                                <td>--</td>}
+                                {c.grade.averageScore != null ?
+                                    <td>{c.grade.averageScore}</td> :
+                                    <td>--</td>}
 
                                 <td>
                                     <Link to={`/secure/teacher/students/${c.studentId.id}`} variant="success" className="btn btn-primary btn-sm">Xem thêm</Link>
@@ -116,6 +211,8 @@ const ListStudent = () => {
                 </div>
                 </>}
 
+                <Button onClick={exportPDF} variant="primary" className="btn btn-lg mt-1 mb-3 mx-2">Xuất PDF</Button>
+                <Button onClick={exportCSV} variant="warning" className="btn btn-lg mt-1 mb-3 mx-2">Xuất CSV</Button>
             </div >
         </>
     );

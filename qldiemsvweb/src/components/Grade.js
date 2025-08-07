@@ -78,7 +78,6 @@ const AddGrades = () => {
             setLoading(true);
             let url = buildUrl(endpoint.savegrade, { classId });
             await authApis().post(url, submitData)
-
             setMsg("Lưu điểm thành công!");
             nav(`/secure/teacher/classes/${classId}/students`)
         } catch (err) {
