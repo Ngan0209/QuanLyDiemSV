@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { MyUserContext } from "../configs/Contexts";
 import { useParams } from "react-router-dom";
-import Api, { authApis, buildUrl, endpoint } from "../configs/Api";
+import { authApis, buildUrl, endpoint } from "../configs/Api";
 const ViewGrades = () => {
     const [grades, setGrades] = useState([]);
     const [user] = useContext(MyUserContext);
@@ -37,7 +37,7 @@ const ViewGrades = () => {
                             <th>Giữa kỳ</th>
                             <th>Cuối kỳ</th>
                             <th></th>
-                            <th></th>
+                            <th>Điểm TB</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +48,7 @@ const ViewGrades = () => {
                                 <td>{g.midterm}</td>
                                 <td>{g.finalExem}</td>
                                 <td>
-                                    {g.typegradeSet?.length > 0 ? (
+                                    {g.typegradeSet.length > 0 ? (
                                         <ul>
                                             {g.typegradeSet.map(t => (
                                                 <li key={t.id}>{t.name}: {t.grade}</li>
@@ -58,6 +58,9 @@ const ViewGrades = () => {
                                         "--"
                                     )}
                                 </td>
+                                {g.averageScore != null ?
+                                    <td>{g.averageScore}</td> :
+                                    <td>--</td>}
                                 
                             </tr>
                         ))}

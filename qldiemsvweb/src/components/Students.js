@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { MyUserContext } from "../configs/Contexts";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Api, { authApis, buildUrl, endpoint } from "../configs/Api";
 import { Button, Form, Table } from "react-bootstrap";
 import jsPDF from "jspdf";

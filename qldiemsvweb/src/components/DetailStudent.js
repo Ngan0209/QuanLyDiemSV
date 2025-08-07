@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react"
 import { MyUserContext } from "../configs/Contexts";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Api, { authApis, buildUrl, endpoint } from "../configs/Api";
-import { Button, Table } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import { authApis, buildUrl, endpoint } from "../configs/Api";
 import MySpinner from "./layout/MySpinner";
-import { Modal, Form, Row, Col, Image } from 'react-bootstrap';
+import { Form, Row, Col, Image } from 'react-bootstrap';
 
 const DetailStudent = () => {
     const [student, setStudent] = useState();

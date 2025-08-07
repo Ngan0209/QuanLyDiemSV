@@ -11,8 +11,6 @@ import Login from './components/Logins';
 import MyUserReducer from './reducers/MyUserReducer';
 import { useEffect, useReducer } from 'react';
 import { MyUserContext } from './configs/Contexts';
-import cookie from 'react-cookies';
-import { authApis, endpoint } from './configs/Api';
 import ViewGrades from './components/ViewGrade';
 import StudentClasses from './components/StudentClasses';
 import TeacherClasses from './components/TeacherClasses';
@@ -23,26 +21,6 @@ import AddGrades from './components/Grade';
 
 function App() {
   let [user, dispatch] = useReducer(MyUserReducer, null);
-
-  // const loadUser = async () => {
-  //     const token = cookie.load("token");
-  //     if (token) {
-  //       try {
-  //         const res = await authApis().get(endpoint['profile']);
-  //         dispatch({
-  //           type: "login",
-  //           payload: res.data
-  //         });
-  //       } catch (err) {
-  //         console.error("Không thể tự động đăng nhập lại:", err);
-  //         cookie.remove("token");
-  //       }
-  //     }
-  //   };
-
-    // useEffect(() => {
-    //   loadUser();
-    // },[]);
 
   return (
     <div style={{

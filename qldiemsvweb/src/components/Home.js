@@ -55,8 +55,6 @@ const Home = () => {
                 <div className="d-flex" style={{ marginTop: '200px' }}>
                     <div className="mt-4">
                         <div className="d-flex flex-column gap-3 mb-5">
-                            {/* onClick={() => handleClick(s.id)} */}
-                            {/* {semesters.map(s => <Link key={s.id} to={`/secure/student/semesters/${s.id}/classes`} className="btn btn-primary btn-lg px-5">} */}
                             {semesters.map(s => <Button key={s.id} onClick={() => handleClick(s.id)} className="btn btn-primary btn-lg px-5">
                                 {s.name}
                             </Button>)}

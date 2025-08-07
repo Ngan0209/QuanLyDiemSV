@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Alert, Button, Col, Container, Row, Form, Table } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import Api, { authApis, buildUrl, endpoint } from "../configs/Api";
+import { authApis, buildUrl, endpoint } from "../configs/Api";
 import MySpinner from "./layout/MySpinner";
 import { MyUserContext } from "../configs/Contexts";
 
@@ -65,7 +65,7 @@ const AddGrades = () => {
             },
             finalExem: s.grade.finalExem ,
             midterm: s.grade.midterm ,
-            typegradeSet: (s.grade?.typegradeSet ?? []).map(tg => ({
+            typegradeSet: (s.grade.typegradeSet).map(tg => ({
                 id: tg.id,
                 name: tg.name,
                 grade: tg.grade ,

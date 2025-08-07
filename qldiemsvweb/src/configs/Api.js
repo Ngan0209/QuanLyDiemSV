@@ -27,27 +27,27 @@ export const buildUrl = (template, params) => {
     return url;
 };
 
-// export const authApis = () => axios.create({
-//     baseURL: BASE_URL,
-//     headers: {
-//         'Authorization': `Bearer ${cookie.load('token')}`
-//     },
+export const authApis = () => axios.create({
+    baseURL: BASE_URL,
+    headers: {
+        'Authorization': `Bearer ${cookie.load('token')}`
+    },
    
-// })
+})
 
-export const authApis = () => {
-    const token = cookie.load('token');
-    const role = cookie.load('role');
-    console.info("role:", role);
-    console.info("Token:", token);
+// export const authApis = () => {
+//     const token = cookie.load('token');
+//     const role = cookie.load('role');
+//     console.info("role:", role);
+//     console.info("Token:", token);
 
-    return axios.create({
-        baseURL: BASE_URL,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-}
+//     return axios.create({
+//         baseURL: BASE_URL,
+//         headers: {
+//             'Authorization': `Bearer ${token}`
+//         }
+//     });
+// }
 
 export default axios.create({
     baseURL: BASE_URL
