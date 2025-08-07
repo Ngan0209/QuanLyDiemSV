@@ -3,7 +3,6 @@ import { MyUserContext } from "../configs/Contexts";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Api, { authApis, buildUrl, endpoint } from "../configs/Api";
 import { Button, Form, Table } from "react-bootstrap";
-import cookie from 'react-cookies'
 
 const ListStudent = () => {
     const [studentClasses, setStudentClasses] = useState([]);
@@ -64,7 +63,7 @@ const ListStudent = () => {
                         <Form.Control value={q} onChange={e => setQ(e.target.value)} type="text" placeholder="Tìm kiếm sinh viên..." />
                     </Form.Group>
                 </Form>
-                <Link to={""} variant="success" className="btn btn-danger btn-lg mt-1 mb-3">Nhập điểm</Link>
+                <Link to={`/secure/teacher/classes/${classId}/saveGrade`} variant="success" className="btn btn-danger btn-lg mt-1 mb-3">Nhập điểm</Link>
                 <Link to={`/secure/teacher/classes/${classId}/add-GradeColumn`} variant="success" className="btn btn-danger btn-lg mt-1 mb-3 mx-3">Thêm cột điểm</Link>
                 {studentClasses.length === 0 ? (
                     <li className="list-group-item">Không có sinh viên nào</li>

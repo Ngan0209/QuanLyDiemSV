@@ -19,6 +19,7 @@ import TeacherClasses from './components/TeacherClasses';
 import ListStudent from './components/Students';
 import DetailStudent from './components/DetailStudent';
 import GradeColumn from './components/GradeColumn';
+import AddGrades from './components/Grade';
 
 function App() {
   let [user, dispatch] = useReducer(MyUserReducer, null);
@@ -66,6 +67,7 @@ function App() {
               <Route path='/secure/teacher/classes/:classId/students' element={<ListStudent />} />
               <Route path='/secure/teacher/students/:studentId' element={<DetailStudent/>}/>
               <Route path='/secure/teacher/classes/:classId/add-GradeColumn' element={<GradeColumn/>} />
+              <Route path='/secure/teacher/classes/:classId/saveGrade' element={<AddGrades/>}/>
             </Routes>
           </Container>
 

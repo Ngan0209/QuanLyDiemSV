@@ -14,7 +14,8 @@ export const endpoint = {
     'liststudent': '/secure/teacher/classes/{classId}/students',
     'detailstudent':'/secure/teacher/students/{studentId}',
     'delete': 'delete-columnGrade/classes/{classId}',
-    'gradecolumn': '/secure/teacher/classes/{classId}/add-GradeColumn'
+    'gradecolumn': '/secure/teacher/classes/{classId}/add-GradeColumn',
+    'savegrade': '/secure/teacher/classes/{classId}/saveGrade'
 
 }
 

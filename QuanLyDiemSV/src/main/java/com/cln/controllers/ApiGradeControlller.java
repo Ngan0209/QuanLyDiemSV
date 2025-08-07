@@ -63,12 +63,14 @@ public class ApiGradeControlller {
         }
     }
 
-//    @PostMapping("/secure/teacher/classes/{classId}/saveGrade")
-//    public ResponseEntity<?> saveGrade(@PathVariable("classId") int classId,
-//            @RequestBody List<Grade> grades) {
-//        try{
-//            this.gradeService.saveGrades(grades);
-//            return Re
-//        }
-//    }
+    @PostMapping("/secure/teacher/classes/{classId}/saveGrade")
+    public ResponseEntity<?> saveGrade(@PathVariable("classId") int classId,
+            @RequestBody List<Grade> grades) {
+         try {
+            gradeService.saveGrades(grades);
+            return ResponseEntity.ok(Map.of("message", "Lưu điểm thành công"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
 }

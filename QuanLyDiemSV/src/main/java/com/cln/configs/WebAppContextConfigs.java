@@ -5,6 +5,7 @@
 package com.cln.configs;
 
 import com.cln.formatters.TeacherFormatter;
+import com.cln.formatters.TypeGradeFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -71,5 +72,6 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new TeacherFormatter());
+        registry.addFormatter(new TypeGradeFormatter());
     }
 }
